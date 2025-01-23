@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Compile LaTeX document Introduction
         uses: xu-cheng/latex-action@master
@@ -95,73 +95,73 @@ jobs:
 
 
       - name: Save Introduction artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: Introduction.pdf
           path: Slides/Introduction/main.pdf
 
       - name: Save Stability artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: Stability.pdf
           path: Slides/Stability/main.pdf
 
       - name: Save Laplace artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: Laplace.pdf
           path: Slides/Laplace/main.pdf
 
       - name: Save Bode artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: Bode.pdf
           path: Slides/Bode/main.pdf
 
       - name: Save Control artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: Control.pdf
           path: Slides/Control/main.pdf
 
       - name: Save Discrete artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: Discrete.pdf
           path: Slides/Discrete/main.pdf
 
       - name: Save LyapunovTheory artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: LyapunovTheory.pdf
           path: Slides/LyapunovTheory/main.pdf
 
       - name: Save HJB_LQR artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: HJB_LQR.pdf
           path: Slides/HJB_LQR/main.pdf
 
       - name: Save Observer artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: Observer.pdf
           path: Slides/Observer/main.pdf
 
       - name: Save ControllabilityObservability artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: ControllabilityObservability.pdf
           path: Slides/ControllabilityObservability/main.pdf
 
       - name: Save Kalman artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: Kalman.pdf
           path: Slides/Kalman/main.pdf
 
       - name: Save Linearization artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: Linearization.pdf
           path: Slides/Linearization/main.pdf
