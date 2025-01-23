@@ -1,35 +1,35 @@
 # How to use
 
-This repository contains regularly updated course materials. You can use lecture slides for self study (they are written as lecture notes). Lecture recordings from this and last year offerings are linked below. The links in the Self-study with Colab section are both for self-study and reviewing the practical sessions. Refer to the book and resourses suggestions at the bottom of the page.
+This repository contains regularly updated course materials. You can use lecture slides for self-study (they are written as lecture notes). Lecture recordings are linked below. The links in the Self-study with Colab section are both for self-study and reviewing the practical sessions. Refer to the book and resource suggestions at the bottom of the page.
 
 # Lecture slides
 
 
-* Lecture 1 - https://github.com/SergeiSa/Control-Theory-2024/blob/main/Slides/Introduction.pdf
-* Lecture 2 - https://github.com/SergeiSa/Control-Theory-2024/blob/main/Slides/Stability.pdf
-* Lecture 3 - https://github.com/SergeiSa/Control-Theory-2024/blob/main/Slides/Control.pdf
-* Lecture 4 - https://github.com/SergeiSa/Control-Theory-2024/blob/main/Slides/Laplace.pdf
-* Lecture 5 - https://github.com/SergeiSa/Control-Theory-2024/blob/main/Slides/Bode.pdf
-* Lecture 6 - https://github.com/SergeiSa/Control-Theory-2024/blob/main/Slides/Discrete.pdf
-* Lecture 7 - https://github.com/SergeiSa/Control-Theory-2024/blob/main/Slides/HJB_LQR.pdf
-* Lecture 8 - https://github.com/SergeiSa/Control-Theory-2024/blob/main/Slides/Observer.pdf
-* Lecture 9 - https://github.com/SergeiSa/Control-Theory-2024/blob/main/Slides/ControllabilityObservability.pdf
-* Lecture 10 - https://github.com/SergeiSa/Control-Theory-2024/blob/main/Slides/Kalman.pdf
-* Lecture 11 - https://github.com/SergeiSa/Control-Theory-2024/blob/main/Slides/LyapunovTheory.pdf
-* Lecture 12 - https://github.com/SergeiSa/Control-Theory-2024/blob/main/Slides/Linearization.pdf
+* Lecture 1 - https://github.com/SergeiSa/Control-Theory-2025/blob/main/Slides/Introduction.pdf
+* Lecture 2 - https://github.com/SergeiSa/Control-Theory-2025/blob/main/Slides/Stability.pdf
+* Lecture 3 - https://github.com/SergeiSa/Control-Theory-2025/blob/main/Slides/Control.pdf
+* Lecture 4 - https://github.com/SergeiSa/Control-Theory-2025/blob/main/Slides/Laplace.pdf
+* Lecture 5 - https://github.com/SergeiSa/Control-Theory-2025/blob/main/Slides/Bode.pdf
+* Lecture 6 - https://github.com/SergeiSa/Control-Theory-2025/blob/main/Slides/Discrete.pdf
+* Lecture 7 - https://github.com/SergeiSa/Control-Theory-2025/blob/main/Slides/HJB_LQR.pdf
+* Lecture 8 - https://github.com/SergeiSa/Control-Theory-2025/blob/main/Slides/Observer.pdf
+* Lecture 9 - https://github.com/SergeiSa/Control-Theory-2025/blob/main/Slides/ControllabilityObservability.pdf
+* Lecture 10 - https://github.com/SergeiSa/Control-Theory-2025/blob/main/Slides/Kalman.pdf
+* Lecture 11 - https://github.com/SergeiSa/Control-Theory-2025/blob/main/Slides/LyapunovTheory.pdf
+* Lecture 12 - https://github.com/SergeiSa/Control-Theory-2025/blob/main/Slides/Linearization.pdf
 
 
 # Lecture videos:
 
 
-[playlist](https://www.youtube.com/playlist?list=PLlxR_sEKjSpTmFuMQ84ityyaYwAvOthIJ)
+[playlist]()
 
-* Lecture 1 (State Space) - https://youtu.be/sgc9bQ7ao3A
-* Lecture 2 (Stability) - https://youtu.be/ZCjeTW4jjW8
-* Lecture 3 (Stabilizing control) - https://youtu.be/XFO02Z2W0Rs
-* Lecture 4 (Laplace, Transfer functions) - https://youtu.be/ow9sWpSf_YI
-* Lecture 5 (Bode) - https://youtu.be/U8szIWSVf6E
-* Lecture 6 (Discrete) - https://youtu.be/k4QQXFkcthw
+* Lecture 1 (State Space) - 
+* Lecture 2 (Stability) - 
+* Lecture 3 (Stabilizing control) - 
+* Lecture 4 (Laplace, Transfer functions) - 
+* Lecture 5 (Bode) - 
+* Lecture 6 (Discrete) - 
 * Lecture 7 (LQR, Riccati) - 
 * Lecture 8 (Observers) -
 * Lecture 9 (Controllability, Observability) - 
@@ -40,25 +40,14 @@ This repository contains regularly updated course materials. You can use lecture
 # Assignments (labs)
 
 * Assignment / lab / submission / gradable item \# 1:
-* * PDF: https://github.com/SergeiSa/Control-Theory-Slides-Spring-2022/blob/main/Assignment/Assignment1.pdf
-* * Colab: https://github.com/SergeiSa/Control-Theory-Slides-Spring-2022/blob/main/Assignment/Assignment1.ipynb
+* * PDF: https://github.com/SergeiSa/Control-Theory-Slides-Spring-2025/blob/main/Assignment/Assignment1.pdf
+* * Colab: https://github.com/SergeiSa/Control-Theory-Slides-Spring-2025/blob/main/Assignment/Assignment1.ipynb
 * Assignment / lab / submission / gradable item \# 2:
-* * PDF: https://github.com/SergeiSa/Control-Theory-Slides-Spring-2022/blob/main/Assignment/Assignment2.pdf
-* * Colab: https://github.com/SergeiSa/Control-Theory-Slides-Spring-2022/blob/main/Assignment/Assignment2.ipynb
+* * PDF: https://github.com/SergeiSa/Control-Theory-Slides-Spring-2025/blob/main/Assignment/Assignment2.pdf
+* * Colab: https://github.com/SergeiSa/Control-Theory-Slides-Spring-2025/blob/main/Assignment/Assignment2.ipynb
 * Assignment / lab / submission / gradable item \# 3:
-* * PDF: https://github.com/SergeiSa/Control-Theory-Slides-Spring-2022/blob/main/Assignment/Assignment3.pdf
-* * Colab: https://github.com/SergeiSa/Control-Theory-Slides-Spring-2022/blob/main/Assignment/Assignment3.ipynb
-
-# Practice sessions with Colab
-
-* Practice 1 (State Space) - https://github.com/SergeiSa/Control-Theory-Slides-Spring-2022/blob/main/Practice/Practice_1_ODE_to_StateSpace.ipynb
-* Practice 2 (Stability) - https://github.com/SergeiSa/Control-Theory-Slides-Spring-2022/blob/main/Practice/Practice_2_Stability.ipynb
-* Practice 3 (Laplace, Transfer functions) - https://github.com/SergeiSa/Control-Theory-Slides-Spring-2022/blob/main/Practice/Practice_3_Laplace_TransferFunctions.ipynb
-* Practice 4 (Bode) - https://github.com/SergeiSa/Control-Theory-Slides-Spring-2022/blob/main/Practice/Practice_4_Bode.ipynb
-* Practice 5 (Feedback control) - https://github.com/SergeiSa/Control-Theory-Slides-Spring-2022/blob/main/Practice/Practice_5_FeedbackControl.ipynb
-* Practice 6 (Trajectory tracking) - https://github.com/SergeiSa/Control-Theory-Slides-Spring-2022/blob/main/Practice/Practice_6_TrajectoryTracking.ipynb
-* Practice 7 (Discrete) - https://github.com/SergeiSa/Control-Theory-Slides-Spring-2022/blob/main/Practice/Practice_7_Discrete.ipynb
-* Practice 8 (Lyapunov) - https://github.com/SergeiSa/Control-Theory-Slides-Spring-2022/blob/main/Practice/Practice_8_Lyapunov.ipynb
+* * PDF: https://github.com/SergeiSa/Control-Theory-Slides-Spring-2025/blob/main/Assignment/Assignment3.pdf
+* * Colab: https://github.com/SergeiSa/Control-Theory-Slides-Spring-2025/blob/main/Assignment/Assignment3.ipynb
 
 # Book suggestions
 
@@ -68,6 +57,8 @@ This repository contains regularly updated course materials. You can use lecture
 * Control Systems Engineering Norman S. Nise 
   * Chapter 3.3: The General State-Space Representation 
   * Chapter 3.4: Applying the State-Space Representation
+* 	State-Space Representation of LTI Systems - http://web.mit.edu/2.14/www/Handouts/StateSpace.pdf
+* 	Time-Domain Solution of LTI State Equations - http://web.mit.edu/2.14/www/Handouts/StateSpaceResponse.pdf
 * Systems of First Order Linear Differential Equations. [Download](http://www.personal.psu.edu/sxt104/class/Math251/Notes-LinearSystems.pdf)
 
 
