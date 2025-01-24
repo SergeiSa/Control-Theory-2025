@@ -24,14 +24,14 @@ This repository contains regularly updated course materials. You can use lecture
 
 [playlist]()
 
-* Lecture 1 (State Space) - 
+* Lecture 1 (State Space) - https://youtu.be/YngXRK6A_Pg
 * Lecture 2 (Stability) - 
 * Lecture 3 (Stabilizing control) - 
 * Lecture 4 (Laplace, Transfer functions) - 
 * Lecture 5 (Bode) - 
 * Lecture 6 (Discrete) - 
 * Lecture 7 (LQR, Riccati) - 
-* Lecture 8 (Observers) -
+* Lecture 8 (Observers) - 
 * Lecture 9 (Controllability, Observability) - 
 * Lecture 10 (Kalman) - 
 
