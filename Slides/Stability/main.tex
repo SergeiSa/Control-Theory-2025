@@ -151,7 +151,7 @@ This LTI is an \emph{autonomous system}, since its evolution depends only on the
 
 
 
-\begin{frame}{Stability of autonomous LTI}
+\begin{frame}{Stability of an Autonomous LTI}
 	\framesubtitle{Real eigenvalues}
 	\begin{flushleft}
 		
@@ -327,12 +327,23 @@ Let us compute $\dot{\bo{x}}^\top \bo{x}$:
 \end{bmatrix}
 \end{equation}
 
+
+\begin{equation}
+	\dot{\bo{x}}^\top \bo{x} =
+	\begin{bmatrix}
+		x_1 & x_2
+	\end{bmatrix}
+	\begin{bmatrix}
+		\alpha  x_1 - \beta x_2 \\ \beta x_1 +  \alpha x_2
+	\end{bmatrix}
+\end{equation}
+
 \begin{equation}
 \dot{\bo{x}}^\top \bo{x} =
 \alpha (x_1^2 + x_2^2)
 \end{equation}
 
-From this it is clear that the product $\dot{\bo{x}}^\top \bo{x} < 0$ is negative iff $\alpha < 0$.
+The product $\dot{\bo{x}}^\top \bo{x} < 0$ is negative iff $\alpha < 0$.
 
 \begin{definition}
 As long as the \emph{real parts of the eigenvalues} of the system are \emph{strictly negative}, the system is \emph{asymptotically stable}. If the real parts of the eigenvalues of the system are zero, the system is \emph{marginally stable}.
@@ -377,17 +388,19 @@ is shown below:
 \begin{flushleft}
 
 Given $\dot{\bo{x}} = \bo{A} \bo{x}$, where $\bo{A}$ can be decomposed via eigen-decomposition as $\bo{A} = \bo{U} \bo{C} \bo{U}^{-1}$, where $\bo{C}$ is a complex-valued diagonal matrix and $\bo{U}$ is a complex-valued inevitable matrix. 
-
-\bigskip
-
+%
+\begin{equation}
+	\dot{\bo{x}} = \bo{U} \bo{C} \bo{U}^{-1} \bo{x}
+\end{equation}
+%
 We multiply both sides by $\bo{U}^{-1}$, then define $\bo{z} = \bo{U}^{-1} \bo{x}$ to arrive at:
-
+%
 \begin{equation}
     \dot{\bo{z}} = \bo{C} \bo{z}
 \end{equation}
-
+%
 which falls into a set of independent equations, with complex coefficients $c_j$:
-
+%
 \begin{equation}
     \dot{z}_j = c_j z_j
 \end{equation}
