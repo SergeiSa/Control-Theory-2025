@@ -22,10 +22,10 @@ This repository contains regularly updated course materials. You can use lecture
 # Lecture videos:
 
 
-[playlist]()
+[playlist](https://youtube.com/playlist?list=PLlxR_sEKjSpRhzDik5kLzQK_RADJTmDIn&si=POVyJ-5t9KVhPbe1)
 
 * Lecture 1 (State Space) - https://youtu.be/YngXRK6A_Pg
-* Lecture 2 (Stability) - 
+* Lecture 2 (Stability) - https://youtu.be/Pmri82mUpnI
 * Lecture 3 (Stabilizing control) - 
 * Lecture 4 (Laplace, Transfer functions) - 
 * Lecture 5 (Bode) - 
