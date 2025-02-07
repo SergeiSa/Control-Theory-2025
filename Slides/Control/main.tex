@@ -122,7 +122,7 @@ Note that \eqref{eq:closed_loop} is an autonomous system. We call this a \emph{c
 %\framesubtitle{Stability of the closed-loop system}
 \begin{flushleft}
 
-Observing the system $\dot{\bo{x}} = (\bo{A} - \bo{B}\bo{K})\bo{x}$ we obtained, we can notice that we already have the tools to analyse its stability:
+We can analyse stability of $\dot{\bo{x}} = (\bo{A} - \bo{B}\bo{K})\bo{x}$:
 
 \begin{block}{Stability condition for LTI closed-loop system}
 The real parts of the eigenvalues of the matrix $(\bo{A} - \bo{B}\bo{K})$ should be negative for asymptotic stability, or non-positive for stability in the sense of Lyapunov.
@@ -232,6 +232,213 @@ So, all you need to do is to find such $\bo{K}$ that $(\bo{A} - \bo{B}\bo{K})$ i
 
 
 
+
+\begin{frame}{Spring-mass-dumper, 1}
+	%\framesubtitle{Stability of the closed-loop system}
+	\begin{flushleft}
+		
+		Let us consider a spring-mass-dumper:
+		%
+		\begin{equation}
+			\ddot y + \mu \dot y + c y = u
+		\end{equation}
+		
+		We can propose the feedback control in the form:
+		%
+		\begin{equation}
+			u = -k_d \dot y  -k_p y 
+		\end{equation}
+		%
+		this is called a \emph{proportional-differential controler}, often shortened as \emph{PD controller}; $k_d$ is a differential coefficient and $k_p$ is a proportional coefficient. The closed-loop system is:
+		%
+		\begin{equation}
+			\ddot y + (\mu + k_d) \dot y + (c+k_p) y = 0
+		\end{equation}
+		
+		
+		In state-space form it is:
+		%
+		\begin{equation}
+			\begin{bmatrix}
+				\dot x_1 \\ \dot x_2
+			\end{bmatrix} 
+			= 
+			\begin{bmatrix}
+				0 & 1 \\ -(\mu + k_d) & -(c+k_p)
+			\end{bmatrix}
+			\begin{bmatrix}
+				x_1 \\ x_2
+			\end{bmatrix}
+		\end{equation}
+		
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Spring-mass-dumper, 2}
+	%\framesubtitle{Stability of the closed-loop system}
+	\begin{flushleft}
+		
+		The stability of the system depends on the eigenvalues of the state matrix of the closed-loop system:
+		%
+		\begin{equation}
+			\begin{bmatrix}
+				0 & 1 \\ -(\mu + k_d) & -(c+k_p)
+			\end{bmatrix}
+		\end{equation}
+		
+		It is easy compute eigenvalues of a 2 by 2 matrix, using its determinant $\text{det}$ and trace $\text{tr}$:
+		%
+		\begin{equation}
+			\lambda = \frac{1}{2} \left( \text{tr} \pm \sqrt{\text{tr}^2 - 4 \text{det}} \right)
+		\end{equation}
+		
+		In this case $\text{det} = (\mu + k_d)$ and $\text{tr} = - (c+k_p)$.
+		%
+		\begin{equation}
+			\lambda = \frac{1}{2} \left( - (c+k_p) \pm \sqrt{(c+k_p)^2 - 4 (\mu + k_d)} \right)
+		\end{equation}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Spring-mass-dumper, 3}
+	%\framesubtitle{Stability of the closed-loop system}
+	\begin{flushleft}
+		
+		
+		We define $d = \sqrt{(c+k_p)^2 - 4 (\mu + k_d)}$:
+		
+		\begin{equation}
+			\lambda = \frac{1}{2} \left( - (c+k_p) \pm d \right)
+		\end{equation}
+		
+		
+\begin{itemize}
+	\item 
+	If \textcolor{red}{$\mu + k_d < 0$} then $(c+k_p)^2 - 4 (\mu + k_d) > 0$ and $d > (c+k_p)$, so one of the eigenvalues is \textcolor{red}{positive}.
+	
+	\item 
+	If \textcolor{myblue}{$\mu + k_d = 0$} then $d = (c+k_p)$, so one of the eigenvalues is \textcolor{myblue}{zero}.
+	
+	\item 
+	If \textcolor{mydarkgreen}{$\mu + k_d > 0$} then it is either complex or $0 < d < (c+k_p)$ if it is real;
+	
+	\begin{itemize}
+		\item if \textcolor{red}{$c+k_p < 0$} then one of the eigenvalues is \textcolor{red}{positive}.
+		
+		\item if \textcolor{myblue}{$c+k_p = 0$} then $\lambda = \pm  i \sqrt{ (\mu + k_d)}$
+		
+		\item if \textcolor{mydarkgreen}{$c+k_p > 0$} then both eigenvalues are have \textcolor{mydarkgreen}{negative} real parts.
+	\end{itemize}
+	
+\end{itemize}
+		
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Spring-mass-dumper, 4}
+	%\framesubtitle{Stability of the closed-loop system}
+	\begin{flushleft}
+		
+		
+		\begin{equation}
+			\ddot y + (\mu + k_d) \dot y + (c+k_p) y = 0
+		\end{equation}
+		
+		\begin{itemize}
+			\item 
+			Note that the \textcolor{mydarkgreen}{asymptotic stability} is achieved when $\mu + k_d > 0$ and $c+k_p > 0$.
+			
+			\item 
+			If $\mu + k_d \geq 0$ and $c+k_p \geq 0$ then the system is \textcolor{myblue}{marginally stable}.
+			
+			\item 
+			if either $\mu + k_d < 0$ or $c+k_p < 0$ the system is \textcolor{red}{unstable}.
+		\end{itemize}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Spring-mass-dumper, 5}
+	%\framesubtitle{Stability of the closed-loop system}
+	\begin{flushleft}
+		
+		Given $c = 8$ and $\mu = 40$, assume that we want the closed-loop system to have eigenvalues $\lambda_1 = -4$ and $\lambda_2 = -20$.
+		%
+		\begin{align}
+			16 = \lambda_1 - \lambda_2= \frac{1}{2} ( - (c+k_p) + d ) -  \frac{1}{2} ( - (c+k_p) - d ) = d
+		\end{align}
+		%
+		It follows that:
+		%
+		\begin{align}
+			-4 = \lambda_1 = \frac{1}{2} ( - (c+k_p) + 16)
+			\\
+			- (c+k_p) + 16 = -8
+			\\
+			k_p  = 16
+		\end{align}
+		
+		
+		Also we can write:
+		%
+		\begin{align}
+			d = \sqrt{(c+k_p)^2 - 4 (\mu + k_d)}
+			\\
+			16^2 = 24^2 - 4 (40 + k_d)
+			\\
+			k_d = 320 / 4 - 40 = 40
+		\end{align}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Pole-placement}
+	%\framesubtitle{Stability of the closed-loop system}
+	\begin{flushleft}
+		
+		The method of finding control gains in such a way that the closed-loop system has desired eigenvalues is called \emph{pole placement}.
+		
+		\bigskip
+		
+		As the earlier example illustrated, it is not easy to do manually. However, there is software that finds such control gains automatically.
+		
+		\bigskip
+		
+		In MATLAB there is a function \texttt{K = place(A,B,p)}, where \texttt{p} is teh desired aigenvalues of \texttt{(A-B*K)}.
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
 \begin{frame}{Trajectory tracking (1)}
 	%\framesubtitle{Stability of the closed-loop system}
 	\begin{flushleft}
@@ -328,250 +535,6 @@ So, all you need to do is to find such $\bo{K}$ that $(\bo{A} - \bo{B}\bo{K})$ i
 		\end{align}				
 		
 		Here we can see that $\bo{x}^*(t)$ acts as a new input, and it makes sense to discuss how the system reacts to various inputs.
-		
-	\end{flushleft}
-\end{frame}
-
-
-\begin{frame}{}
-	
-	\centering{\huge Extra material} 
-	
-\end{frame}
-
-
-\begin{frame}{Input-output control (State-Space), 1}
-	%\framesubtitle{Stability of the closed-loop system}
-	\begin{flushleft}
-		
-		Given a system where we measure $\bo{y}$:
-		%
-		\begin{equation}
-			\begin{cases}
-				\dot{\bo{x}} = \bo{A}\bo{x} + \bo{B}\bo{u} \\
-				\bo{y} = \bo{C}\bo{x}
-			\end{cases}
-		\end{equation}
-		%
-		it makes sense that the control law can use output $\bo{y}$, but not state $\bo{x}$:
-		%
-		\begin{equation}
-			\bo{u} = -\bo{K}\bo{y} 
-		\end{equation}		
-		
-		Closed loop system in this case becomes: 
-		%
-		\begin{equation}
-			\dot{\bo{x}} = (\bo{A}- \bo{B}\bo{K}\bo{C})\bo{x} 
-		\end{equation}		
-		
-		The problem with this control method is that finding $\bo{K}$ such that $\bo{A}- \bo{B}\bo{K}\bo{C} \in \mathbb{H}$ is not always possible.
-		
-	\end{flushleft}
-\end{frame}
-
-
-\begin{frame}{Input-output control (State-Space), 2}
-	%\framesubtitle{Stability of the closed-loop system}
-	\begin{flushleft}
-		
-		\begin{example}
-			Let us consider a second order system:
-			
-			\begin{equation}
-				\begin{cases}
-					\begin{bmatrix}
-						\dot x_1 \\ \dot x_2
-					\end{bmatrix} = 
-					\begin{bmatrix}
-						0 & 1 \\
-						-1 & 2
-					\end{bmatrix}
-					\begin{bmatrix}
-						x_1 \\ x_2
-					\end{bmatrix}
-					+
-					\begin{bmatrix}
-						0 \\ u
-					\end{bmatrix}
-					\\
-					y = \begin{bmatrix}		1 & 0	\end{bmatrix} 
-					\begin{bmatrix}
-						x_1 \\ x_2
-					\end{bmatrix}
-				\end{cases}
-			\end{equation}
-			
-			Control law $u = -k y$ is equivalent to $u = -k x_1$. Closed loop system takes form:
-			
-			\begin{equation}
-				\begin{bmatrix}
-					\dot x_1 \\ \dot x_2
-				\end{bmatrix} = 
-				\begin{bmatrix}
-					0 & 1 \\
-					-(k+1) & 2
-				\end{bmatrix}
-				\begin{bmatrix}
-					x_1 \\ x_2
-				\end{bmatrix}
-			\end{equation}
-			
-			This system will not be stable under any choice of $k$.
-		\end{example}
-		
-		
-	\end{flushleft}
-\end{frame}
-
-
-
-
-\begin{frame}{Input-output control (State-Space), 3}
-	%\framesubtitle{Stability of the closed-loop system}
-	\begin{flushleft}
-		
-		Assuming that $\bo{C}\bo{B} = 0$, we can find $\dot{\bo{y}}$:
-		%
-		\begin{equation}
-			\dot{\bo{y}} = \bo{C}\dot{\bo{x}} = \bo{C}(\bo{A}\bo{x} + \bo{B}\bo{u}) = \bo{C}\bo{A}\bo{x}
-		\end{equation}		
-		
-		With that, we could propose control law:
-		%
-		\begin{align}
-			\bo{u} = -\bo{K}_p \bo{y} - \bo{K}_d \dot{\bo{y}} \\
-			\bo{u} = -(\bo{K}_p \bo{C} + \bo{K}_d \bo{C}\bo{A})\bo{x}
-		\end{align}
-	
-		This looks mysterious, so let us clarify this with an example.				
-		
-	\end{flushleft}
-\end{frame}
-
-
-\begin{frame}{Input-output control (State-Space), 4}
-	%\framesubtitle{Stability of the closed-loop system}
-	\begin{flushleft}
-		
-		\begin{example}
-			Let us consider spring-damper system:
-			
-			\begin{equation}
-				\begin{cases}
-					\begin{bmatrix}
-						\dot x_1 \\ \dot x_2
-					\end{bmatrix} = 
-					\begin{bmatrix}
-						0 & 1 \\
-						-c & -\mu
-					\end{bmatrix}
-					\begin{bmatrix}
-						x_1 \\ x_2
-					\end{bmatrix}
-					+
-					\begin{bmatrix}
-						0 \\ u
-					\end{bmatrix}
-					\\
-					y = \begin{bmatrix}		1 & 0	\end{bmatrix} 
-					\begin{bmatrix}
-						x_1 \\ x_2
-					\end{bmatrix}
-				\end{cases}
-			\end{equation}
-			
-			We can see that $y = x_1$ and $\dot y = x_2$, we can check that $\bo{C}\bo{B} = 0$. Control law $u = -k_p y - k_d \dot y$ is equivalent to $u = -k_p x_1 - k_d x_2$. Closed loop system takes form:
-			
-			\begin{equation}
-				\begin{bmatrix}
-					\dot x_1 \\ \dot x_2
-				\end{bmatrix} = 
-				\begin{bmatrix}
-					0 & 1 \\
-					-c-k_p & -\mu- k_d
-				\end{bmatrix}
-				\begin{bmatrix}
-					x_1 \\ x_2
-				\end{bmatrix}
-			\end{equation}
-			
-			This can be achieved with regular state feedback. 
-		\end{example}
-		
-	\end{flushleft}
-\end{frame}
-
-
-
-\begin{frame}{Input-output control (State-Space), 5}
-	%\framesubtitle{Stability of the closed-loop system}
-	\begin{flushleft}
-		
-		Here is a counter-example:
-		
-		\begin{example}
-			
-			\begin{equation}
-				\begin{cases}
-					\dot x = 2x + u \\
-					y = x
-				\end{cases}
-			\end{equation}
-			%
-			If we allow control law $u = -3 y +k \dot y = -3 x + k \dot x$. This gives us closed-loop system:
-			%
-			\begin{align}
-				\dot x = -x + k \dot x \\
-				\dot x-k \dot x = -x
-			\end{align}		
-			
-			If we choose $k = 0.9$ we get close-loop dynamics $0.1\dot x = -x$ with solution $x = C e^{-10t}$.
-			
-			If we choose $k = 0.99$ we get close-loop dynamics $0.01\dot x = -x$ with solution $x = C e^{-100t}$.
-		\end{example}
-		
-	\end{flushleft}
-\end{frame}
-
-
-\begin{frame}{Input-output control (State-Space), 6}
-	%\framesubtitle{Stability of the closed-loop system}
-	\begin{flushleft}
-		
-		We observed in the last example that small changes in control gain lead to vast changes in the closed-loop dynamics. This behavior is not physical. 
-		
-		\bigskip
-		
-		The difference between this and the previous example is that here we have a \textcolor{red}{first order system with a first order controller} (not acceptable), while in the previous example we had a \textcolor{mydarkgreen}{second-order system with a first order controller}. 
-		
-		\bigskip
-		
-		In general, one needs to be careful introducing derivatives in the control law.
-		
-	\end{flushleft}
-\end{frame}
-
-
-\begin{frame}{Input-output control (ODE)}
-	%\framesubtitle{Stability of the closed-loop system}
-	\begin{flushleft}
-		
-		With ODE representation, input-output control design is a little more clear. For example, consider a system:
-		
-		\begin{equation}
-			\ddot y + a \dot y + b y = u
-		\end{equation}
-	
-		We can propose a control law $u = -k_p y - k_d \dot y$. This is called \emph{proportional-derivative (PD) control}. 
-		
-		\bigskip
-		
-		Closed-loop system in this case looks like:
-		
-		\begin{equation}
-			\ddot y + (a + k_d) \dot y + (b + k_p) y = 0
-		\end{equation}
 		
 	\end{flushleft}
 \end{frame}
