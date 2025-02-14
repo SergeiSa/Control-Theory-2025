@@ -233,11 +233,96 @@ So, all you need to do is to find such $\bo{K}$ that $(\bo{A} - \bo{B}\bo{K})$ i
 
 
 
-\begin{frame}{Spring-mass-dumper, 1}
+\begin{frame}{Spring-mass-damper, 1}
 	%\framesubtitle{Stability of the closed-loop system}
 	\begin{flushleft}
 		
-		Let us consider a spring-mass-dumper:
+		Let us consider a spring-mass-damper:
+		%
+		\begin{equation}
+			\ddot y + \mu \dot y + c y = 0
+		\end{equation}
+		
+		The eq. can be re-written in state-space form with a change of variables $x_1 = y$ and $x_2 = \dot y$:
+		%
+		\begin{equation}
+			\begin{bmatrix}
+				\dot x_1 \\ \dot x_2
+			\end{bmatrix} 
+			= 
+			\begin{bmatrix}
+				0 & 1 \\ - c & -\mu
+			\end{bmatrix}
+			\begin{bmatrix}
+				x_1 \\ x_2
+			\end{bmatrix}
+		\end{equation}
+		
+		
+		It is easy compute eigenvalues of a 2 by 2 matrix, using its determinant $\text{det}$ and trace $\text{tr}$:
+		%
+		\begin{equation}
+			\lambda = \frac{\text{tr} \pm \sqrt{\text{tr}^2 - 4 \text{det}}}{2} 
+		\end{equation}
+		
+		Here $\text{det} = c$ and $\text{tr} = -\mu$:
+		%
+		\begin{equation}
+			\lambda = \frac{-\mu \pm \sqrt{\mu^2 - 4 c}}{2} 
+		\end{equation}
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{Spring-mass-damper, 2}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Let us analyze eigenvalues $\lambda = \frac{-\mu \pm \sqrt{\mu^2 - 4 c} }{2}$. We can see that if \textcolor{mydarkgreen}{$\mu > 0$} and \textcolor{mydarkgreen}{$ c > 0$}, there are only two scenarios: 
+		
+		\begin{enumerate}
+			\item $\mu^2 - 4c \geq 0$, in which case $\sqrt{\mu^2 - 4c} \leq \mu$, the eigenvalues are purely real and \textcolor{mydarkgreen}{negative}.
+			\item $\mu^2 - 4c < 0$, in which case $\sqrt{\mu^2 - 4c}$ is a purely imaginary number, the eigenvalues are complex with \textcolor{mydarkgreen}{negative real parts}.
+		\end{enumerate}
+		
+		If $\mu > 0$ and \textcolor{myblue}{$c = 0$}, then $\lambda_1 = -\mu$, $\lambda_2 = 0$, hence the system is \textcolor{myblue}{marginally stable}.
+		
+		If \textcolor{myblue}{$\mu = 0$} and $c > 0$, then $\lambda = \pm i \sqrt{c}$, hence the system is \textcolor{myblue}{marginally stable}.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Spring-mass-damper, 3}
+	\begin{flushleft}
+		
+		
+		If $\mu \geq 0$ and \textcolor{red}{$c < 0$}, then $\sqrt{\mu^2 - 4c} \geq \mu$, and eigenvalues are purely real and one of them is \textcolor{red}{positive}, the system is unstable. If $\mu < 0$ and $c < 0$ at least one of the eigenvalues is still positive.
+		
+		\bigskip
+		
+		If \textcolor{red}{$\mu < 0$} and $c \geq 0$, then again there are only two scenarios: 
+		
+		\begin{enumerate}
+			\item $\mu^2 - 4c \geq 0$, in which case $\sqrt{\mu^2 - 4c} \leq \mu$, the eigenvalues are purely real and \textcolor{red}{positive}.
+			\item $\mu^2 - 4c < 0$, in which case $\sqrt{\mu^2 - 4c}$ is a purely imaginary number, the eigenvalues are complex with \textcolor{red}{positive real parts}.
+		\end{enumerate}
+		
+		\begin{definition}
+			Iff $\mu \geq 0$ and $c \geq 0$ the system $\ddot y + \mu \dot y + c y = 0$ is stable.
+		\end{definition}
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{PD control, 1}
+	\begin{flushleft}
+		
+		Let us consider a spring-mass-damper:
 		%
 		\begin{equation}
 			\ddot y + \mu \dot y + c y = u
@@ -251,145 +336,39 @@ So, all you need to do is to find such $\bo{K}$ that $(\bo{A} - \bo{B}\bo{K})$ i
 		%
 		this is called a \emph{proportional-differential controler}, often shortened as \emph{PD controller}; $k_d$ is a differential coefficient and $k_p$ is a proportional coefficient. The closed-loop system is:
 		%
-		\begin{equation}
+		\begin{align}
 			\ddot y + (\mu + k_d) \dot y + (c+k_p) y = 0
-		\end{equation}
+		\end{align}
 		
-		
-		In state-space form it is:
-		%
-		\begin{equation}
-			\begin{bmatrix}
-				\dot x_1 \\ \dot x_2
-			\end{bmatrix} 
-			= 
-			\begin{bmatrix}
-				0 & 1 \\ -(\mu + k_d) & -(c+k_p)
-			\end{bmatrix}
-			\begin{bmatrix}
-				x_1 \\ x_2
-			\end{bmatrix}
-		\end{equation}
-		
-		
-		
-	\end{flushleft}
-\end{frame}
-
-
-
-
-\begin{frame}{Spring-mass-dumper, 2}
-	%\framesubtitle{Stability of the closed-loop system}
-	\begin{flushleft}
-		
-		The stability of the system depends on the eigenvalues of the state matrix of the closed-loop system:
-		%
-		\begin{equation}
-			\begin{bmatrix}
-				0 & 1 \\ -(\mu + k_d) & -(c+k_p)
-			\end{bmatrix}
-		\end{equation}
-		
-		It is easy compute eigenvalues of a 2 by 2 matrix, using its determinant $\text{det}$ and trace $\text{tr}$:
-		%
-		\begin{equation}
-			\lambda = \frac{1}{2} \left( \text{tr} \pm \sqrt{\text{tr}^2 - 4 \text{det}} \right)
-		\end{equation}
-		
-		In this case $\text{det} = (\mu + k_d)$ and $\text{tr} = - (c+k_p)$.
-		%
-		\begin{equation}
-			\lambda = \frac{1}{2} \left( - (c+k_p) \pm \sqrt{(c+k_p)^2 - 4 (\mu + k_d)} \right)
-		\end{equation}
-		
-		
-	\end{flushleft}
-\end{frame}
-
-
-
-\begin{frame}{Spring-mass-dumper, 3}
-	%\framesubtitle{Stability of the closed-loop system}
-	\begin{flushleft}
-		
-		
-		We define $d = \sqrt{(c+k_p)^2 - 4 (\mu + k_d)}$:
-		
-		\begin{equation}
-			\lambda = \frac{1}{2} \left( - (c+k_p) \pm d \right)
-		\end{equation}
-		
-		
-\begin{itemize}
-	\item 
-	If \textcolor{red}{$\mu + k_d < 0$} then $(c+k_p)^2 - 4 (\mu + k_d) > 0$ and $d > (c+k_p)$, so one of the eigenvalues is \textcolor{red}{positive}.
-	
-	\item 
-	If \textcolor{myblue}{$\mu + k_d = 0$} then $d = (c+k_p)$, so one of the eigenvalues is \textcolor{myblue}{zero}.
-	
-	\item 
-	If \textcolor{mydarkgreen}{$\mu + k_d > 0$} then it is either complex or $0 < d < (c+k_p)$ if it is real;
-	
-	\begin{itemize}
-		\item if \textcolor{red}{$c+k_p < 0$} then one of the eigenvalues is \textcolor{red}{positive}.
-		
-		\item if \textcolor{myblue}{$c+k_p = 0$} then $\lambda = \pm  i \sqrt{ (\mu + k_d)}$
-		
-		\item if \textcolor{mydarkgreen}{$c+k_p > 0$} then both eigenvalues are have \textcolor{mydarkgreen}{negative} real parts.
-	\end{itemize}
-	
-\end{itemize}
-		
-		
-		
-	\end{flushleft}
-\end{frame}
-
-
-
-\begin{frame}{Spring-mass-dumper, 4}
-	%\framesubtitle{Stability of the closed-loop system}
-	\begin{flushleft}
-		
-		
-		\begin{equation}
-			\ddot y + (\mu + k_d) \dot y + (c+k_p) y = 0
-		\end{equation}
-		
-		\begin{itemize}
-			\item 
-			Note that the \textcolor{mydarkgreen}{asymptotic stability} is achieved when $\mu + k_d > 0$ and $c+k_p > 0$.
-			
-			\item 
-			If $\mu + k_d \geq 0$ and $c+k_p \geq 0$ then the system is \textcolor{myblue}{marginally stable}.
-			
-			\item 
-			if either $\mu + k_d < 0$ or $c+k_p < 0$ the system is \textcolor{red}{unstable}.
-		\end{itemize}
-		
-		
-	\end{flushleft}
-\end{frame}
-
-
-
-\begin{frame}{Spring-mass-dumper, 5}
-	%\framesubtitle{Stability of the closed-loop system}
-	\begin{flushleft}
-		
-		Given $c = 8$ and $\mu = 40$, assume that we want the closed-loop system to have eigenvalues $\lambda_1 = -4$ and $\lambda_2 = -20$.
+		The eigenvalues are:
 		%
 		\begin{align}
-			16 = \lambda_1 - \lambda_2= \frac{1}{2} ( - (c+k_p) + d ) -  \frac{1}{2} ( - (c+k_p) - d ) = d
+			d &= \sqrt{(\mu + k_d)^2 - 4 (c+k_p)}
+			\\
+			\lambda &= \frac{-(\mu + k_d) \pm d}{2} 
+		\end{align}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{PD control, 2}
+	\begin{flushleft}
+		
+		Given $c = 40$ and $\mu = 8$, assume that we want the closed-loop system to have eigenvalues $\lambda_1 = -4$ and $\lambda_2 = -20$.
+		%
+		\begin{align}
+			16 = \lambda_1 - \lambda_2= \frac{-(\mu + k_d) +d}{2} - \frac{-(\mu + k_d) - d}{2}  = d
 		\end{align}
 		%
 		It follows that:
 		%
 		\begin{align}
-			-4 = \lambda_1 = \frac{1}{2} ( - (c+k_p) + 16)
+			-4 = \lambda_1 = \frac{-(\mu + k_d) + 16}{2}
 			\\
-			- (c+k_p) + 16 = -8
+			-(\mu + k_d) + 16 = -8
 			\\
 			k_p  = 16
 		\end{align}
@@ -398,11 +377,11 @@ So, all you need to do is to find such $\bo{K}$ that $(\bo{A} - \bo{B}\bo{K})$ i
 		Also we can write:
 		%
 		\begin{align}
-			d = \sqrt{(c+k_p)^2 - 4 (\mu + k_d)}
+			d = \sqrt{(\mu + k_d)^2 - 4 (c+k_p)}
 			\\
-			16^2 = 24^2 - 4 (40 + k_d)
+			16^2 = 24^2 - 4 (40 + k_p)
 			\\
-			k_d = 320 / 4 - 40 = 40
+			k_p = 320 / 4 - 40 = 40
 		\end{align}
 		
 		
@@ -412,8 +391,10 @@ So, all you need to do is to find such $\bo{K}$ that $(\bo{A} - \bo{B}\bo{K})$ i
 
 
 
+
+
+
 \begin{frame}{Pole-placement}
-	%\framesubtitle{Stability of the closed-loop system}
 	\begin{flushleft}
 		
 		The method of finding control gains in such a way that the closed-loop system has desired eigenvalues is called \emph{pole placement}.
@@ -424,7 +405,7 @@ So, all you need to do is to find such $\bo{K}$ that $(\bo{A} - \bo{B}\bo{K})$ i
 		
 		\bigskip
 		
-		In MATLAB there is a function \texttt{K = place(A,B,p)}, where \texttt{p} is teh desired aigenvalues of \texttt{(A-B*K)}.
+		In MATLAB there is a function \texttt{K = place(A,B,p)}, where \texttt{p} are the desired eigenvalues of \texttt{(A-B*K)}.
 		
 		
 	\end{flushleft}
@@ -439,8 +420,7 @@ So, all you need to do is to find such $\bo{K}$ that $(\bo{A} - \bo{B}\bo{K})$ i
 
 
 
-\begin{frame}{Trajectory tracking (1)}
-	%\framesubtitle{Stability of the closed-loop system}
+\begin{frame}{Trajectory tracking, 1}
 	\begin{flushleft}
 		
 		Let the function $\bo{x}^* = \bo{x}^*(t)$ and control $\bo{u}^* = \bo{u}^*(t)$ be a solution to the system $\dot{\bo{x}} = \bo{A}\bo{x} + \bo{B}\bo{u}$, meaning:
@@ -470,7 +450,7 @@ So, all you need to do is to find such $\bo{K}$ that $(\bo{A} - \bo{B}\bo{K})$ i
 
 
 
-\begin{frame}{Trajectory tracking (2)}
+\begin{frame}{Trajectory tracking, 2}
 	%\framesubtitle{Stability of the closed-loop system}
 	\begin{flushleft}
 		
@@ -541,11 +521,30 @@ So, all you need to do is to find such $\bo{K}$ that $(\bo{A} - \bo{B}\bo{K})$ i
 
 
 
-\begin{frame}{Read more}
+
+\begin{frame}{Where are we}
+	
+	% TODO: \usepackage{graphicx} required
+	\begin{figure}
+		\centering
+		\includegraphics[width=1.00\linewidth]{"Scheme colors"}
+	\end{figure}
+	
+
+\end{frame}
+
+
+
+
+
+\begin{frame}{Literature}
 
 \begin{itemize}
-\item Richard M. Murray Control and Dynamical Systems California Institute of Technology \bref{http://www.cds.caltech.edu/~murray/books/AM08/pdf/obc-trajgen_03Jan10.pdf}{Optimization-Based Control}
-\item \bref{https://apmonitor.com/pdc/index.php/Main/ModelSimulation}{Dynamic Simulation in Python}
+	
+	
+	\item Nise, N.S. Control systems engineering. John Wiley \& Sons. (4.5 The General Second-Order System)	
+	
+	\item \bref{https://apmonitor.com/pdc/index.php/Main/ModelSimulation}{Dynamic Simulation in Python}
 \end{itemize}
 \end{frame}
 

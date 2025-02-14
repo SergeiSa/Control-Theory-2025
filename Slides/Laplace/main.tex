@@ -172,7 +172,7 @@ and then collect $Y(s)$ on the left-hand-side:
 Y(s) = \frac{1}{s^2 + a s + b} U(s)
 \end{equation}
 
-This form is called a \emph{transfer function}.
+where expression $\frac{1}{s^2 + a s + b}$ is called a \emph{transfer function}. A transfer function maps an input signal to an output signal.
 
 \end{flushleft}
 \end{frame}
@@ -185,7 +185,7 @@ This form is called a \emph{transfer function}.
 \begin{example}
 Given ODE: $2 \dddot y + 5\dot y - 40 y = 10 u$
 
-The transfer function for it looks: 
+Its transfer function representation: 
 $Y(s)  = \frac{10}{2 s^3 + 5 s - 40} U(s)$
 \end{example}
 
@@ -193,14 +193,14 @@ $Y(s)  = \frac{10}{2 s^3 + 5 s - 40} U(s)$
 \begin{example}
 Given ODE: $2 \dot y - 4 y = u$
 
-The transfer function for it looks: $Y(s) = \frac{1}{2 s - 4} U(s)$
+Its transfer function representation:  $Y(s) = \frac{1}{2 s - 4} U(s)$
 \end{example}
 
 
 \begin{example}
 Given ODE: $3 \dddot y + 4y = u$
 
-The transfer function for it looks: $Y(s) = \frac{1}{2 s^3 + 4} U(s)$
+Its transfer function representation: $Y(s) = \frac{1}{2 s^3 + 4} U(s)$
 \end{example}
 
 \end{flushleft}
@@ -213,25 +213,23 @@ The transfer function for it looks: $Y(s) = \frac{1}{2 s^3 + 4} U(s)$
 %\framesubtitle{Interesting things done easy}
 \begin{flushleft}
 
-Consider the following (strange) ODE:
+Consider the following ODE:
 
 \begin{equation}
 2 \ddot y + 3 \dot y + 2 y = 10 \dot u - u
 \end{equation}
 
-Using the differential equation:
+In the Laplace domain it takes form:
 
 \begin{equation}
 2 s^2 Y(s) + 3s Y(s) + 2Y(s) = 10s U(s) - U(s)
 \end{equation}
-
-...which is the same as:
-
+%
 \begin{equation}
 (2s^2 + 3s + 2) Y(s) = (10s - 1)U(s)
 \end{equation}
 
-The transfer function for it looks: 
+The transfer function representation: 
 
 \begin{equation}
 Y(s) = \frac{10s - 1}{2s^2 + 3s + 2} U(s)
@@ -314,13 +312,17 @@ and finally, express $\bo{y}$ out:
 		
 		\begin{align}
 			&a_n y^n + ... + a_1 y = b_m u^m + ... + b_1 u
-			\\
+		\end{align}
+		%
+		\begin{align}
 			&\begin{cases}
 				\dot{\bo{x}} = \bo{A}\bo{x} + \bo{B}\bo{u} \\
 				\bo{y}  = \bo{C}\bo{x} + \bo{D}\bo{u}
 			\end{cases}
-		\\
-		&Y(s)  = G(s) U(s)
+		\end{align}
+		%
+		\begin{align}
+			&Y(s)  = G(s) U(s)
 		\end{align}
 		
 		We can call it a \emph{system} $\mathcal{G}$ to avoid referencing particular representation.
@@ -334,7 +336,7 @@ and finally, express $\bo{y}$ out:
 	%	\framesubtitle{Interesting things done easy}
 	\begin{flushleft}
 		
-		Open-loop system representation is $Y(s)  = G(s) U(s)$. Let us propose control law (in time domain):
+		Open-loop system representation is $Y(s)  = G(s) U(s)$. Let us propose a control law (in time domain):
 		
 		\begin{equation}
 			u(t) = k_p (v(t) - y(t)) + k_d (\dot v(t) - \dot y(t))
@@ -346,7 +348,7 @@ and finally, express $\bo{y}$ out:
 			U(s) = (k_p + k_d s) (V(s) - Y(s))
 		\end{equation}
 		
-		Defining $H(s) = k_p + k_d s$ we find closed loop system takes form:
+		Defining $H(s) = k_p + k_d s$ the closed loop system takes form:
 		%
 		\begin{align}
 			Y(s)  &= G(s) H(s) (V(s) - Y(s)) \\
@@ -371,19 +373,19 @@ and finally, express $\bo{y}$ out:
 			r(t) = k_p v(t) + k_d \dot v(t)
 		\end{equation}
 		
-		Control law then takes form:
+		The previous control law takes form:
 		%
 		\begin{equation}
 			u(t) = -k_p y(t) - k_d \dot y(t) + r(t)
 		\end{equation}
 		
-		Laplace transform of the control law takes form:
+		Laplace transform of this control law:
 		%
 		\begin{equation}
 			U(s) = -H(s)Y(s) + R(s)
 		\end{equation}
 		
-		The closed loop system takes form:
+		The closed loop system:
 		%
 		\begin{align}
 			Y(s)  &= -G(s) H(s)Y(s) + G(s)R(s) \\
@@ -395,56 +397,181 @@ and finally, express $\bo{y}$ out:
 	\end{flushleft}
 \end{frame}
 
-%\begin{frame}{Transfer Function and Control (1)}
-%	% \framesubtitle{O}
-%	\begin{flushleft}
-%		
-%		Let the dynamic system be described as a transfer function:
-%		
-%		\begin{equation}
-%			Y(s) = G(s) U(s)
-%		\end{equation}
-%		
-%		We can try to modify the input based on how the output looks. Since we always do it in a linear way, we can write it as:
-%		
-%		\begin{align}
-%			Y(s) = G(s) (U(s) - H(s) Y(s)) 
-%		\end{align}
-%		
-%		where $H(s) y$ is called \emph{feedback}.
-%		
-%		\bigskip
-%		
-%		How would the transfer function from $U(s)$ to $Y(s) $ look like? 
-%		
-%	\end{flushleft}
-%\end{frame}
 
 
-%\begin{frame}{Closed-loop, 3}
-%	% \framesubtitle{O}
-%	\begin{flushleft}
-%		
-%		From $Y(s)  = G(s) (U(s)  - H(s) Y(s) )$ we go:
-%		
-%		\begin{equation}
-%			Y(s)  = G(s)U(s) - G(s)H(s) Y(s) 
-%		\end{equation}
-%		\begin{equation}
-%			Y(s)  + G(s)H(s) Y(s)  = G(s)U(s)
-%		\end{equation}
-%		\begin{equation}
-%			Y(s)  = \frac{G(s)}{1 + G(s)H(s)} U(s)
-%		\end{equation}
-%		
-%		Thus, we found \emph{closed-loop} transfer function:
-%		
-%		\begin{equation}
-%			W(s) = \frac{G(s)}{1 + G(s)H(s)}
-%		\end{equation}
-%		
-%	\end{flushleft}
-%\end{frame}
+
+\begin{frame}{Laplace transform of simple functions}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Below are a few functions and their Laplace transform:
+		
+		\begin{align*}
+			f(t) &= e^{at}  &F(s) = \frac{1}{s - a} \\
+			f(t) &= \cos(\omega t) &F(s) = \frac{s}{s^2 + \omega^2} \\
+			f(t) &= \sin(\omega t)  &F(s) = \frac{\omega}{s^2 + \omega^2}\\
+			f(t) &= e^{at}(A \cos(\omega t) + B \sin(\omega t))  &F(s) = \frac{A (s- a) +  B\omega}{(s- a)^2 + \omega^2}
+		\end{align*}
+		
+		Laplace transform is a linear operation. If $F(s) = \mathcal{L}(f(t))$ and $G(s) = \mathcal{L}(g(t))$, then:
+		
+		\begin{align}
+			\mathcal{L}\left(a f(t) + b g(t)\right) = a F(s) + b G(s)
+		\end{align}
+		
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Partial-fraction expansion, 1}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Consider a transfer function $G(s)$ which is a rational fraction:
+		
+		\begin{equation}
+			G(s) = \frac{N(s)}{D(s)} = \frac{b_m s^m + ... + b_1 s + b_0}{a_n s^n + ... + a_1 s + a_0}
+		\end{equation}		
+		
+		If the denominator polynomial $D(s)$ has purely real non-repeating roots $p_i$ (called \emph{poles}) we can re-write it as:
+		
+		\begin{equation}
+			G(s) = \frac{N(s)}{(s - p_1)(s - p_2) \ ... \ (s - p_n)}
+		\end{equation}		
+		
+		
+		If the degree of $D(s)$ is higher than the degree of $N(s)$, then we can perform a partial-fraction expansion:
+		
+		\begin{equation*}
+			G(s) = \frac{N(s)}{(s - p_1)(s - p_2) \ ... \ (s - p_n)} = \frac{r_1}{s - p_1} + \frac{r_2}{s - p_2} + ... + \frac{r_n}{s - p_n}
+		\end{equation*}		
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Partial-fraction expansion, 2}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Let us consider $G(s)$ after the expansion:
+		
+		\begin{equation*}
+			G(s) =\frac{r_1}{s - p_1} + \frac{r_2}{s - p_2} + ... + \frac{r_n}{s - p_n}
+		\end{equation*}		
+		
+		We know that $F(s) = \frac{r_i}{s - p_i} $ is a Laplace image of the time domain function $f(t) = r_i e^{p_i t}$. Hence, the \emph{inverse Laplace transform} of $G(s)$ is given as:
+		
+		\begin{equation*}
+			y(t) =r_1 e^{p_1 t} + ... + r_n e^{p_n t},
+		\end{equation*}		
+		
+		As we can see, the Laplace transform and its inverse, paired with partial-fraction expansion allow us to solve ordinary differential equations.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Partial-fraction expansion, 3}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		If the denominator polynomial $D(s)$ has both real and imaginary roots we can re-write it as:
+		
+		\begin{equation}
+			G(s) = \frac{N(s)}{(s - p_1) \ ... \ (s - p_k)(s^2 + \alpha_1 s + \beta_1) \ ... \ (s^2 + \alpha_l s + \beta_l)}
+		\end{equation}		
+		
+		If the degree of $D(s)$ is lower or equal to that of  $N(s)$ we can divide the numerator by the denominator:
+		
+		\begin{equation*}
+			G(s) = R(s) + \frac{M(s)}{(s - p_1) \ ... \ (s^2 + \alpha_l s + \beta_l)}
+		\end{equation*}		
+		%
+		where degree of $M(s)$ is less than that of $D(s)$. We can then perform a partial-fraction expansion:
+		
+		\begin{equation*}
+			G(s) = R(s) + 
+			\frac{r_1}{s - p_1} +  ... + \frac{r_k}{s - p_k} +  \frac{q_1 s+ h_1}{s^2 + \alpha_1 s + \beta_1} +  ... + \frac{q_l s+ h_l}{s^2 + \alpha_l s + \beta_l}
+		\end{equation*}		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Partial-fraction expansion, 4}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Note that the Laplace domain function $F(s) = \frac{q s+ h}{s^2 + \alpha s + \beta}$ is an image of the time function:
+		
+		\begin{equation*}
+			e^{at}(A \cos(\omega t) + B \sin(\omega t)) 
+			 = \mathcal{L}^{-1}\left( \frac{q s+ h}{s^2 + \alpha s + \beta}\right)
+		\end{equation*}		
+		
+		Thus 
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Partial-fraction expansion, 5}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Partial-fraction expansion can be perfomed using MATLAB or Python:
+		
+		\bigskip
+		
+		\begin{itemize}
+			\item In MATLAB \texttt{[r,p,k] = residue(b,a)}
+				
+			\item In Python \texttt{r,p,k = scipy.signal.residue(b,a)}
+		\end{itemize}
+		
+		\bigskip
+		
+		In both cases, $\texttt{a}$ are the coefficients of the denominator and $\texttt{b}$ are the coefficients of the numerator. 
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+
+\begin{frame}{Literature}
+
+\begin{itemize}
+	
+	
+	\item Nise, N.S. Control systems engineering. John Wiley \& Sons. (Chapter 2 Modeling in the Frequency Domain)	
+	
+\item \bref{https://www.cds.caltech.edu/~murray/courses/cds101/fa04/caltech/am04_ch6-3nov04.pdf}{Chapter 6 Transfer Functions}
+
+\item \bref{https://youtu.be/RJleGwXorUk}{Control Systems Lectures - Transfer Functions, by Brian Douglas}
+
+\item \bref{https://youtu.be/ZGPtPkTft8g}{The Laplace Transform - A Graphical Approach, by Brian Douglas}
+
+\end{itemize}
+
+\end{frame}
+
+
+
+\myqrframe
 
 
 
@@ -471,23 +598,5 @@ and finally, express $\bo{y}$ out:
 		
 	\end{flushleft}
 \end{frame}
-
-
-\begin{frame}{Read more}
-
-\begin{itemize}
-\item \bref{https://www.cds.caltech.edu/~murray/courses/cds101/fa04/caltech/am04_ch6-3nov04.pdf}{Chapter 6 Transfer Functions}
-
-\item \bref{https://youtu.be/RJleGwXorUk}{Control Systems Lectures - Transfer Functions, by Brian Douglas}
-
-\item \bref{https://youtu.be/ZGPtPkTft8g}{The Laplace Transform - A Graphical Approach, by Brian Douglas}
-
-\end{itemize}
-
-\end{frame}
-
-
-
-\myqrframe
 
 \end{document}

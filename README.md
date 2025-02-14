@@ -77,6 +77,7 @@ http://www3.imperial.ac.uk/pls/portallive/docs/1/31851696.PDF
 
 
 ## Lecture 3. Stabilizing control
+* Nise, N.S. Control systems engineering. John Wiley and Sons. (4.5 The General Second-Order System)	
 * Control theory by S. Simrock - sections 5, 6 (stability discussed in terms of TF):
 https://cds.cern.ch/record/1100534/files/p73.pdf
 * Module 9: State Feedback Control Design, Lecture Note 1:
