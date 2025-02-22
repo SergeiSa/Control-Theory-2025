@@ -1,0 +1,546 @@
+\documentclass{beamer}
+
+\input{settings.tex}
+
+
+
+
+\title{Input Response}
+\subtitle{Control Theory, Lecture 6}
+\author{by Sergei Savin}
+\centering
+\date{\mydate}
+
+
+
+\begin{document}
+\maketitle
+
+
+%\begin{frame}{Content}
+%
+%\begin{itemize}
+%\item Frequency response
+%\item Partial-fraction expansion with sine input
+%\item Amplitude and phase shift of a steady-state solution
+%\item Bode plot
+%\end{itemize}
+%
+%\end{frame}
+
+
+
+
+\begin{frame}{Steady-State gain: ODE}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Given an ODE with a constant input $c = \text{const}$:
+		
+		\begin{align}
+			&a_n y^{(n)} + ... + a_1 \dot y  + a_0 y = b_m u^{(m )}+ ... + b_1 \dot u + b_0 u
+			\\
+			&u(t) = c 
+		\end{align}
+		
+		This is equivalent to:
+		
+		\begin{align}
+			a_n y^{(n)} + ... + a_1 \dot y  + a_0 y =  b_0 c
+		\end{align}
+		
+		A steady-state solution $y_{ss} = \text{const}$:
+		
+		\begin{align}
+			a_0 y_{ss}  =  b_0 c \\
+			y_{ss} = \frac{b_0}{a_0} c
+		\end{align}
+		
+		The quantity $K = \frac{b_0}{a_0}$ is the steady-state gain of the system.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+
+\begin{frame}{Steady-State gain: Transfer Function}
+	%	\framesubtitle{Interesting things done easy}
+	\begin{flushleft}
+		
+		Assume the system  $\mathcal{G}$ represented as a transfer function:
+		
+		\begin{equation}
+			Y(s) = \frac{b_m s^m + ... + b_0}{a_n s^n + ... + a_0} U(s)
+		\end{equation}
+		
+		\bigskip
+		
+		Then, as any element multiplied by the differential operator $s$ with power higher than 0 is a derivative of $u$ or $y$ and both are 0 at the steady-state solution, the steady-state gain can be found by setting those to zero:
+		
+		\begin{equation}
+			K = \frac{b_0}{a_0}
+		\end{equation}		
+
+\end{flushleft}
+\end{frame}		
+
+
+
+\begin{frame}{Steady-State gain: State Space, 1}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Given an LTI with a constant input $\bo{u}_{ss} = \text{const}$:
+		
+		\begin{equation}
+			\begin{cases}
+				\dot{\bo{x}} = \bo{A}\bo{x} + \bo{B}\bo{u}
+				\\
+				\bo{y} = \bo{C}\bo{x}
+			\end{cases}
+		\end{equation}
+		
+		A steady-state solution $\bo{x}_{ss} = \text{const}$:
+		
+		\begin{equation}
+		\begin{cases}
+			0 = \bo{A}\bo{x}_{ss} + \bo{B}\bo{u}_{ss}
+			\\
+			\bo{y}_{ss} = \bo{C}\bo{x}_{ss} 
+		\end{cases}
+		\end{equation}
+		
+		\begin{equation}
+				\bo{y}_{ss} = -\bo{C} \bo{A}^{-1}\bo{B}\bo{u}_{ss}
+		\end{equation}
+		
+		
+		The quantity $K =-\bo{C} \bo{A}^{-1}\bo{B}$ is the steady-state gain of the system.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Steady-State gain: State Space, 2}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		For the following LTI:
+		
+		\begin{equation}
+			\begin{cases}
+			\begin{bmatrix}
+				\dot{x}_1 \\ \dot{x}_2 \\ \dot{x}_3
+			\end{bmatrix} 
+			=
+			\begin{bmatrix}
+				0 & 1 & 0 \\ 
+				0 & 0 & 1 \\
+				-a_0 & -a_1 & -a_2
+			\end{bmatrix} 
+			\begin{bmatrix}
+				x_1 \\ x_2 \\ x_3
+			\end{bmatrix} 
+			+ 
+			\begin{bmatrix}
+				0 \\ 0 \\ b_0
+			\end{bmatrix}
+			\bo{u}
+			\\
+			\bo{y} = 			
+			\begin{bmatrix}
+				1 & 0 & 0
+			\end{bmatrix}
+			\begin{bmatrix}
+			x_1 \\ x_2 \\ x_3
+			\end{bmatrix} 
+		\end{cases}
+		\end{equation}
+		%
+		Then we get:
+		%
+		\begin{equation}
+			\bo{y}_{ss} = 
+			-\begin{bmatrix}
+				1 & 0 & 0
+			\end{bmatrix}
+			\begin{bmatrix}
+				-a_1 / a_0 & -a_2 / a_0 & -1 / a_0 \\
+				1 & 0 & 0 \\
+				0 & 1 & 0
+			\end{bmatrix}
+			\begin{bmatrix}
+				0 \\ 0 \\ b_0
+			\end{bmatrix}
+			\bo{u}_{ss}
+		\end{equation}
+		
+		
+		The quantity $K =-\bo{C} \bo{A}^{-1}\bo{B} = \frac{b_0}{a_0}$ is the steady-state gain of the system.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}{Frequency Response, 1}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Consider LTI with input $\bo{u} = \alpha \cos(\omega t) + \beta \sin (\omega t)$:
+		%
+		\begin{equation}
+			\begin{cases}
+				\dot{\bo{x}} = \bo{A}\bo{x} + \bo{B}\bo{u}
+				\\
+				\bo{y} = \bo{C}\bo{x}
+			\end{cases}
+		\end{equation}
+		%
+		with steady-state solution:
+		%
+		\begin{align}
+			x_i &= g_i \cos(\omega t) + h_i \sin (\omega t)
+			\\
+			\dot x_i &=\omega h_i \cos(\omega t) - \omega g_i \sin (\omega t)
+			\\
+			y_i &= q \cos(\omega t) + r \sin (\omega t)
+		\end{align}
+		%
+		Grouping terms in front of cosines we get:
+		%
+		\begin{align}
+			\begin{cases}
+				\omega \bo{h} = \bo{A} \bo{g} + \bo{B} \alpha
+				\\
+				q = \bo{C} \bo{g}
+			\end{cases}
+		\end{align}
+		%
+		And grouping terms in front of sines :
+		%
+		\begin{align}
+			\begin{cases}
+				-\omega \bo{g} = \bo{A} \bo{h} + \bo{B} \beta
+				\\
+				r = \bo{C} \bo{h}
+			\end{cases}
+		\end{align}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Frequency Response, 2}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		This system can be written as:
+		
+		\begin{align}
+			\begin{cases}
+				\begin{bmatrix}
+					-\bo{A} & \omega \bo{I} \\
+					-\omega \bo{I} & -\bo{A}
+				\end{bmatrix}
+				\begin{bmatrix}
+					\bo{g} \\ \bo{h}
+				\end{bmatrix}
+				=
+				\begin{bmatrix}
+					\bo{B} & 0 \\  0 & \bo{B}
+				\end{bmatrix}
+				\begin{bmatrix}
+				\alpha \\   \beta
+				\end{bmatrix}
+				\\
+				\begin{bmatrix}
+					q \\  r
+				\end{bmatrix}
+				= 
+				\begin{bmatrix}
+					\bo{C} & 0 \\  0 & \bo{C}
+				\end{bmatrix}
+				\begin{bmatrix}
+				\bo{g} \\ \bo{h}
+				\end{bmatrix}
+			\end{cases}
+		\end{align}		
+		
+		Note that we can compute the steady-state solution for all states of this system:
+		%
+		\begin{align}
+			\begin{bmatrix}
+				\bo{g} \\ \bo{h}
+			\end{bmatrix}
+			= 
+				\begin{bmatrix}
+					-\bo{A} & \omega \bo{I} \\
+					-\omega \bo{I} & -\bo{A}
+				\end{bmatrix}^{-1}
+				\begin{bmatrix}
+					\bo{B} & 0 \\  0 & \bo{B}
+				\end{bmatrix}
+				\begin{bmatrix}
+					\alpha \\   \beta
+				\end{bmatrix}
+		\end{align}		
+		
+		We can also solve for the steady-state output:
+		%
+		\begin{align}
+			\begin{bmatrix}
+				q \\  r
+			\end{bmatrix}
+			= 
+			\begin{bmatrix}
+				\bo{C} & 0 \\  0 & \bo{C}
+			\end{bmatrix}
+			\begin{bmatrix}
+				-\bo{A} & \omega \bo{I} \\
+				-\omega \bo{I} & -\bo{A}
+			\end{bmatrix}^{-1}
+			\begin{bmatrix}
+				\bo{B} & 0 \\  0 & \bo{B}
+			\end{bmatrix}
+			\begin{bmatrix}
+				\alpha \\   \beta
+			\end{bmatrix}
+		\end{align}		
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}{Frequency Response, 3}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		The map between the input and the output as:
+		%
+		\begin{align}
+			\bo{M}(\omega)
+			= 
+			\begin{bmatrix}
+				\bo{C} & 0 \\  0 & \bo{C}
+			\end{bmatrix}
+			\begin{bmatrix}
+				-\bo{A} & \omega \bo{I} \\
+				-\omega \bo{I} & -\bo{A}
+			\end{bmatrix}^{-1}
+			\begin{bmatrix}
+				\bo{B} & 0 \\  0 & \bo{B}
+			\end{bmatrix}
+		\end{align}		
+		
+		We can define input coordinates $\zeta = 
+		\begin{bmatrix}
+			\alpha \\   \beta
+		\end{bmatrix}$ and output coordinates $\bo{p} = 
+		\begin{bmatrix}
+		q \\  r
+		\end{bmatrix} = \bo{M}\zeta$. The amptitude amplification can be defined as the ratio:
+		%
+		\begin{align}
+			\text{amp}(\omega)
+			= 
+			\frac{\sqrt{q^2 + r^2}}{\sqrt{\alpha^2 + \beta^2}}
+			=
+			\frac{||\bo{p}||}{||\zeta||}
+			=
+			\frac{||\bo{M}\zeta||}{||\zeta||}
+		\end{align}		
+		
+		Notice that by definition $\underset{\zeta}{\text{max}}\frac{||\bo{M}\zeta||_2}{||\zeta||_2} = ||\bo{M}||_2 = \sigma_{\max}(\bo{M})$, where $\sigma_{\max}(\bo{M})$ is the largest singular value of the matrix.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{Frequency Response, 4}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		The phase shift can be defined as:
+		%
+		\begin{align}
+			\text{phase}(\omega)
+			\sim 
+			\angle (\bo{p}) - \angle (\zeta)
+			=
+			\angle (\bo{M} \zeta) - \angle (\zeta)
+		\end{align}		
+		
+		But matrix $\bo{M}$ is an orthogonal matrix:  $\bo{M} = \text{amp}(\omega)
+		\begin{bmatrix}
+			\cos(\varphi) & -\sin(\varphi) \\
+			\sin(\varphi) & \cos(\varphi)
+		\end{bmatrix}$. Thus:
+		%
+		\begin{align}
+			\text{phase}(\omega)
+			\sim 
+			\varphi = \text{atan2}(M_{21}, M_{11})
+		\end{align}		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{MIMO Frequency Response, 1}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Transfer function-based Bode plot relies on a SISO representation of a system. However, choosing input and output one can use it for a MIMO system as well. 
+		
+		\bigskip
+		
+		State-space representation naturally points out the connection between inputs and outputs and the resulting responce. Consider a fixed input matrix $\bo{B} \in \R^{n \times 1}$; we can ask a question, what choice of the output $\bo{C} \in \R^{1 \times n}$ (assuming $||\bo{C} || = 1$) produces the largest amplitude of the output signal.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+
+\begin{frame}{MIMO Frequency Response, 2}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Fropm the previous slides we saw that:
+		
+		\begin{align*}
+			 \text{amp}(\omega)
+			\begin{bmatrix}
+				\cos(\varphi) & -\sin(\varphi) \\
+				\sin(\varphi) & \cos(\varphi)
+			\end{bmatrix}
+			= 
+			\begin{bmatrix}
+				\bo{C} & 0 \\  0 & \bo{C}
+			\end{bmatrix}
+			\begin{bmatrix}
+				-\bo{A} & \omega \bo{I} \\
+				-\omega \bo{I} & -\bo{A}
+			\end{bmatrix}^{-1}
+			\begin{bmatrix}
+				\bo{B} & 0 \\  0 & \bo{B}
+			\end{bmatrix}
+		\end{align*}		
+		
+		Defining:
+		%
+		\begin{align}
+			\begin{bmatrix}
+				\bo{P} _{11} & \bo{P} _{12} \\
+				\bo{P} _{21} & \bo{P} _{22}
+			\end{bmatrix}
+			= 
+			\begin{bmatrix}
+				-\bo{A} & \omega \bo{I} \\
+				-\omega \bo{I} & -\bo{A}
+			\end{bmatrix}^{-1}
+			\begin{bmatrix}
+				\bo{B} & 0 \\  0 & \bo{B}
+			\end{bmatrix},
+			\ \ \
+			\text{amp}(\omega) = m
+		\end{align}		
+		
+		We find:
+		%
+		\begin{align}
+			\begin{bmatrix}
+				m\cos(\varphi) & -m\sin(\varphi) \\
+				m\sin(\varphi) & m\cos(\varphi)
+			\end{bmatrix}
+			= 
+			\begin{bmatrix}
+			\bo{C}\bo{P} _{11} & \bo{C}\bo{P} _{12} \\
+			\bo{C}\bo{P} _{21} & \bo{C}\bo{P} _{22}
+			\end{bmatrix}
+			\\
+			m^2\cos^2(\varphi) + m^2\sin^2(\varphi)
+		= 
+		\bo{C}\bo{P} _{11} \bo{P} _{11}\T \bo{C}\T + 
+		\bo{C}\bo{P} _{21} \bo{P} _{21}\T \bo{C}\T
+		\\
+		m^2
+		= 
+		\bo{C}(\bo{P} _{11} \bo{P} _{11}\T +\bo{P} _{21} \bo{P} _{21}\T  )\bo{C}\T
+		\end{align}		
+		
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{MIMO Frequency Response, 3}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		Defining $\bo{N} = \bo{P} _{11} \bo{P} _{11}\T +\bo{P} _{21} \bo{P} _{21}\T$ with decomposition $\bo{N} = \bo{D} \bo{D}\T$ we can find maximum value of $m$ by maximizing:
+		%
+		\begin{align*}
+			m = \underset{\bo{C}}{\max } \frac{\sqrt{\bo{C} \bo{D} \bo{D}\T \bo{C}\T}}{|| \bo{C}||}
+			=
+			\underset{\bo{C}}{\max } \frac{||\bo{D}\T \bo{C}\T||}{|| \bo{C}||} = \sigma_{\max}(\bo{D}) =\sqrt{ \sigma_{\max}(\bo{N})}
+		\end{align*}		
+		
+		This allows us:
+		
+		\begin{itemize}
+			\item To find highest amplification ration in the system's state-space.
+			
+			\item To determine the output matrix corresponding to this "worse-case scenario"  $\bo{C}_{\max}$ as the vector in the SVD decomposition of $\bo{N})$ matrix corresponding to the largest singular value.
+		\end{itemize}
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{MIMO Frequency Response, 4}
+	% \framesubtitle{O}
+	\begin{flushleft}
+		
+		% TODO: \usepackage{graphicx} required
+		\begin{figure}
+			\centering
+			\includegraphics[width=1 \linewidth]{WorstCaseAmp}
+			\caption{Dashed - worst case amplitude response, other two - a particular bode plot}
+			\label{fig:worstcaseamp}
+		\end{figure}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+\myqrframe
+
+
+
+
+
+
+\end{document}
