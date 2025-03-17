@@ -4,7 +4,7 @@
 
 
 \title{Riccati eq., Linear Quadratic Regulator}
-\subtitle{Control Theory, Lecture 7}
+\subtitle{Control Theory, Lecture 8}
 \author{by Sergei Savin}
 \centering
 \date{\mydate}
@@ -42,7 +42,7 @@ Let us define dynamics:
     \dot {\bo{x}} = \bo{f} (\bo{x}, \bo{u})
 \end{equation}
 %
-with initial conditions $\bo{x}(0)$. 
+with initial conditions $\bo{x}(0)=\bo{x}_0$. 
 
 \bigskip
 
@@ -124,7 +124,7 @@ Optimal cost is attained when optimal policy is attained: $\pi = \pi^*(\bo{x}, t
 
 
 
-\begin{frame}{Hamilton-Jacobi-Bellman equation}
+\begin{frame}{Hamilton-Jacobi-Bellman equation, 1}
 % \framesubtitle{HJB}
 \begin{flushleft}
 
@@ -139,8 +139,6 @@ g(\bo{x}, \bo{u}) +
 \right] = 0
 \end{equation}
 
-%This can be loosely interpreted as follows: the value in square brackets is $\dot J(\bo{x}_0, \pi)$, which is equal to 0 when $\pi = \pi^*(\bo{x}, t)$, and is positive otherwise (in the small vicinity of $\pi^*$), as $J(\bo{x}_0, \pi^*)$ is smaller than any $J(\bo{x}_0, \pi), \ \pi^* \neq \pi$.
-
 \bigskip
 
 
@@ -153,9 +151,37 @@ g(\bo{x}, \bo{u}) +
 \frac{\partial J^*}{\partial \bo{x}} \bo{f} (\bo{x}, \bo{u}) \right] 
 \end{equation}
 
+The term $\frac{\partial J^*}{\partial \bo{x}} \bo{f} (\bo{x}, \bo{u})$ represents a derivative of $J^*$ with respect to the vector field $\bo{f} (\bo{x}, \bo{u})$. 
+
+
 \end{flushleft}
 \end{frame}
 
+
+
+
+
+\begin{frame}{Hamilton-Jacobi-Bellman equation, 2}
+	% \framesubtitle{HJB}
+	\begin{flushleft}
+		
+		The core idea behind HJB is that for any sub-optimal control law the rate at which you incur cost $g(\bo{x}, \bo{u})$ outpaces the rate $\frac{\partial J^*}{\partial \bo{x}} \bo{f} (\bo{x}, \bo{u})$  at which the "optimal cost-to-go from the current position to the goal" decreases: 
+		
+		\begin{equation}
+		g(\bo{x}, \bo{u}) + 
+		\frac{\partial J^*}{\partial \bo{x}} \bo{f} (\bo{x}, \bo{u}) > 0
+		\end{equation}
+		
+		and only for the optimal control policy the HJB holds:
+		
+		\begin{equation}
+			g(\bo{x}, \bo{u}^*) + 
+			\frac{\partial J^*}{\partial \bo{x}} \bo{f} (\bo{x}, \bo{u}^*) 
+			= 0
+		\end{equation}
+		
+	\end{flushleft}
+\end{frame}
 
 
 
@@ -171,21 +197,23 @@ For LTI, dynamics is:
 
 We can choose quadratic cost:
 \begin{equation}
-g(\mathbf  x, \mathbf  u) = 
-\mathbf  x^\top \bo{Q} \bo{x} +
-\mathbf  u^\top \bo{R} \bo{u} 
-\end{equation}
-
-Then HJB becomes:
-\begin{equation}
-\underset{\bo{u}}{\min} \ [ 
+g(\bo{x}, \bo{u} ) = 
 \bo{x}^\top \bo{Q} \bo{x} +
-\bo{u}^\top \bo{R} \bo{u} + 
-\frac{\partial J^*}{\partial \bo{x}} 
-(\bo{A} \bo{x} + \bo{B} \bo{u})] = 0
+\bo{u} ^\top \bo{R} \bo{u} 
 \end{equation}
 %
-where $\bo{Q} = \bo{Q}^\top \geq 0 $ and $\bo{R} = \bo{R}^\top > 0$.
+where $\bo{Q} = \bo{Q}^\top \geq 0 $ is a positive semidefinite matrix and $\bo{R} = \bo{R}^\top > 0$ is a positive-definite matrix.
+
+\bigskip
+
+There is a theorem that says that for LTI with quadratic cost, $J^*$ has the form:
+
+\begin{equation}
+	J^* = \bo{x}^\top \bo{S} \bo{x}
+\end{equation}
+%
+where $\bo{S} = \bo{S}^\top \geq 0$.
+
 
 \end{flushleft}
 \end{frame}
@@ -196,17 +224,31 @@ where $\bo{Q} = \bo{Q}^\top \geq 0 $ and $\bo{R} = \bo{R}^\top > 0$.
 %\framesubtitle{HJB for LTI, part 2}
 \begin{flushleft}
 
-There is a theorem that says that for LTI with quadratic cost, $J^*$ has the form:
+Let us compute the term $\frac{\partial J^*}{\partial \bo{x}} \bo{f} (\bo{x}, \bo{u}) $ that appears in the HJB. Using the fact that $J^* =\bo{x}^\top \bo{S} \bo{x}$ we re-write it as:
 
 \begin{equation}
-J^* = \mathbf  x^\top \bo{S} \bo{x}
+	\frac{\partial J^*}{\partial \bo{x}} \bo{f} (\bo{x}, \bo{u}) = \frac{d}{dt}(\bo{x}^\top \bo{S}\bo{x})
+	=
+	\dot{\bo{x}}^\top \bo{S}\bo{x} + \bo{x}^\top \bo{S}\dot{\bo{x}} 
 \end{equation}
-%
-where $\bo{S} = \bo{S}^\top \geq 0$.
+
+Since $\dot {\bo{x}} = \bo{A}  \bo{x} + \bo{B} \bo{u}$ we can continue the derivation:
+
+\begin{equation}
+	... =
+	(\bo{A}  \bo{x} + \bo{B} \bo{u})^\top \bo{S}\bo{x} + \bo{x}^\top \bo{S}(\bo{A}  \bo{x} + \bo{B} \bo{u})
+\end{equation}
+
 
 \bigskip
 
-Then HJB becomes:
+Remembering that $g(\bo{x}, \bo{u} ) = 
+\bo{x}^\top \bo{Q} \bo{x} +
+\bo{u} ^\top \bo{R} \bo{u}$ we write the HJB $\underset{\bo{u}}{\min} \ 
+\left[ 
+g(\bo{x}, \bo{u}) + 
+\frac{\partial J^*}{\partial \bo{x}} \bo{f} (\bo{x}, \bo{u}) 
+\right] = 0$ as:
 
 \[
 \underset{\bo{u}}{\min} \ 
@@ -222,24 +264,52 @@ Then HJB becomes:
 \right ] = 0
 \]
 
-Simplifying, we get:
-
-\[
-\underset{\bo{u}}{\min} \ 
-\left [ 
-\bo{u}^\top \bo{R} \bo{u}
-+ 
-\bo{x}^\top (
-\bo{Q} + \bo{S} \bo{A} + \bo{A}^\top \bo{S}
-)\bo{x}
-+ 
-\bo{x}^\top \bo{S} \bo{B} \bo{u} 
-+ \bo{u}^\top \bo{B}^\top \bo{S} \bo{x} 
-\right ] = 0
-\]
-
 \end{flushleft}
 \end{frame}
+
+
+
+
+
+
+\begin{frame}{Algebraic Riccati (LTI case), 3}
+	%\framesubtitle{HJB for LTI, part 2}
+	\begin{flushleft}
+		
+		We can simplify the expression $\mathbf  x^\top \bo{Q} \bo{x} +
+		\bo{u}^\top \bo{R} \bo{u}
+		+ 
+		\bo{x}^\top \bo{S}
+		(\bo{A} \bo{x} + \bo{B} \bo{u}) 
+		+ 
+		(\bo{A} \bo{x} + \bo{B} \bo{u})^\top
+		\bo{S} \bo{x}$ as:
+
+
+		\[
+		\underset{\bo{u}}{\min} \ 
+		\left [ 
+		\bo{u}^\top \bo{R} \bo{u}
+		+ 
+		\bo{x}^\top (
+		\bo{Q} + \bo{S} \bo{A} + \bo{A}^\top \bo{S}
+		)\bo{x}
+		+ 
+		\bo{x}^\top \bo{S} \bo{B} \bo{u} 
+		+ \bo{u}^\top \bo{B}^\top \bo{S} \bo{x} 
+		\right ] = 0
+		\]
+		
+		
+		\bigskip
+		
+		The minimum is achieved when the function is at an extremum, meaning $\frac{\partial}{\partial \bo{u}} (...) = 0$.
+		
+	\end{flushleft}
+\end{frame}
+
+
+
 
 
 \begin{frame}{Linear Quadratic Regulator, 1}
@@ -247,26 +317,34 @@ Simplifying, we get:
 \begin{flushleft}
 
 
-Finding partial derivative of the HJB with respect to $\bo{u}$ and setting it to zero (as it is an extreme point) we get:
-\begin{equation}
-2 \mathbf  u^\top \bo{R} + 
+Setting the partial derivatives of $\bo{u}^\top \bo{R} \bo{u}
++ 
+\bo{x}^\top (
+\bo{Q} + \bo{S} \bo{A} + \bo{A}^\top \bo{S}
+)\bo{x}
++ 
+\bo{x}^\top \bo{S} \bo{B} \bo{u} 
++ \bo{u}^\top \bo{B}^\top \bo{S} \bo{x}$ to zero:
+
+
+\begin{align}
+2 \bo{u} ^\top \bo{R} + 
 2 \bo{x}^\top \bo{S} \bo{B} = 0
-\end{equation}
-
-This expression can be transposed and $\mathbf  u$ separated:
-
-\begin{equation}
-\mathbf  u = 
--\bo{R}^{-1} \bo{B}^\top \bo{S} \bo{x}
-\end{equation}
+\\
+\bo{R} \bo{u} + 
+ \bo{B}^\top   \bo{S} \bo{x}= 0
+ \\
+ \bo{u} = 
+ -\bo{R}^{-1} \bo{B}^\top \bo{S} \bo{x}
+\end{align}
 
 This is the desired control law. We can see that it is \emph{proportional}. We can re-write it as:
 
 \begin{equation}
-\mathbf  u = -\mathbf K \bo{x}
+\bo{u} = -\bo{K} \bo{x}
 \end{equation}
 
-where $\mathbf K = \bo{R}^{-1} \bo{B}^\top \bo{S}$ is the controller gain. This control law is called Linear Quadratic Regulator (LQR).
+where $\bo{K}  = \bo{R}^{-1} \bo{B}^\top \bo{S}$ is the controller gain. This control law is called \emph{Linear Quadratic Regulator (LQR)}.
 
 \end{flushleft}
 \end{frame}
@@ -274,43 +352,71 @@ where $\mathbf K = \bo{R}^{-1} \bo{B}^\top \bo{S}$ is the controller gain. This 
 
 
 
+\begin{frame}{Linear Quadratic Regulator, 2}
+	%\framesubtitle{}
+	\begin{flushleft}
+		
+		We substitute $\bo{u} = -\bo{R}^{-1} \bo{B}^\top \bo{S} \bo{x}$ into the Algebraic Riccati eq.  $\bo{u}^\top \bo{R} \bo{u}
+		+ 
+		\bo{x}^\top (
+		\bo{Q} + \bo{S} \bo{A} + \bo{A}^\top \bo{S}
+		)\bo{x}
+		+ 
+		\bo{x}^\top \bo{S} \bo{B} \bo{u} 
+		+ \bo{u}^\top \bo{B}^\top \bo{S} \bo{x}$:
+		
+		\begin{align*}
+			\hspace*{-0.7cm}
+			\textcolor{myred}{(\bo{R}^{-1} \bo{B}^\top \bo{S} \bo{x})}^\top \bo{R} \textcolor{myred}{(\bo{R}^{-1} \bo{B}^\top \bo{S} \bo{x})}
+			+ 
+			\bo{x}^\top (
+			\bo{Q} + \bo{S} \bo{A} + \bo{A}^\top \bo{S}
+			)\bo{x}
+			- 
+			\\
+			-
+			\bo{x}^\top \bo{S} \bo{B} \textcolor{myred}{(\bo{R}^{-1} \bo{B}^\top \bo{S} \bo{x})}
+			- 
+			\textcolor{myred}{(\bo{R}^{-1} \bo{B}^\top \bo{S} \bo{x})}^\top \bo{B}^\top \bo{S} \bo{x} = 0
+			\\
+		\end{align*}
+		%
+		\begin{align*}
+				\bo{x}^\top (
+				\bo{Q} + \bo{S} \bo{A} + \bo{A}^\top \bo{S}
+				+
+				 \bo{S} \bo{B} \bo{R}^{-1} \bo{R} \mathbf  R^{-1} \bo{B}^\top \bo{S} -
+				 \\
+				 - \bo{S} \bo{B} \bo{R}^{-1} \bo{B}^\top \bo{S} 
+				 - \bo{S} \bo{B} \bo{R}^{-1} \bo{B}^\top \bo{S} 
+				 )  \bo{x} 
+				= 0
+		\end{align*}
+		
+		Simplifying, we get: 
+		
+		\begin{equation}
+			\bo{x}^\top (\bo{Q} + \bo{S} \bo{A} + \bo{A}^\top \bo{S}
+			- \bo{S} \bo{B} \bo{R}^{-1} \bo{B}^\top \bo{S}) \bo{x} = 0
+		\end{equation}
+		%
+		
+		
+	\end{flushleft}
+\end{frame}
 
-\begin{frame}{Algebraic Riccati (LTI case), 3}
+
+
+\begin{frame}{Linear Quadratic Regulator, 3}
 % \framesubtitle{Algebraic Riccati}
 \begin{flushleft}
 
-Substituting found control law into the HJB, we find:
-\begin{equation}
-\begin{split}
-\underset{\bo{u}}{\min} \ 
-[ 
-\bo{x}^\top (
-\bo{Q} + \bo{S} \bo{A} + \bo{A}^\top \bo{S}
-)\bo{x}
-+
-\bo{x}^\top \bo{S} \bo{B} \bo{R}^{-1} \bo{R} \mathbf  R^{-1} \bo{B}^\top \bo{S} \bo{x}
-- \\
-- 
-\bo{x}^\top \bo{S} \bo{B} \bo{R}^{-1} \bo{B}^\top \bo{S} \bo{x}
-- 
-\bo{x}^\top\bo{S} \bo{B} \bo{R}^{-1} \bo{B}^\top \bo{S} \bo{x} 
-] = 0
-\end{split}
-\end{equation}
-
-Simplifying, we get: 
-
-\begin{equation}
-\bo{x}^\top (\bo{Q} + \bo{S} \bo{A} + \bo{A}^\top \bo{S}
-- \bo{S} \bo{B} \bo{R}^{-1} \bo{B}^\top \bo{S}) \bo{x} = 0
-\end{equation}
+The condition $\bo{x}^\top (\bo{Q} + \bo{S} \bo{A} + \bo{A}^\top \bo{S}
+- \bo{S} \bo{B} \bo{R}^{-1} \bo{B}^\top \bo{S}) \bo{x} = 0$ holds for all $\bo{x}$ iff:
 %
-which would hold for all $\bo{x}$ iff:
-%
-
 \begin{equation}
-\bo{Q} - \bo{S} \bo{B} \bo{R}^{-1} \bo{B}^\top \bo{S} 
- + \bo{S} \bo{A} + \bo{A}^\top \bo{S} = 0
+	\bo{Q} - \bo{S} \bo{B} \bo{R}^{-1} \bo{B}^\top \bo{S} 
+	+ \bo{S} \bo{A} + \bo{A}^\top \bo{S} = 0
 \end{equation}
 
 This is the \emph{Algebraic Riccati equation}.
@@ -373,7 +479,7 @@ There are a number of ways to solve LQR:
 		with a cost function:
 		
 		\begin{equation}
-			J = \sum_{i=0}^N (\bo{x}_i\T \bo{Q} \bo{x}_i +  \bo{u}_i\T \bo{R} \bo{u}_i)
+			J = \sum_{i=0}^\infty (\bo{x}_i\T \bo{Q} \bo{x}_i +  \bo{u}_i\T \bo{R} \bo{u}_i)
 		\end{equation}
 		
 		Let us find the optimal control policy for this case.
@@ -384,37 +490,6 @@ There are a number of ways to solve LQR:
 
 
 
-
-\begin{frame}{Cost function}
-	%	\framesubtitle{Numerical methods}
-	\begin{flushleft}
-		
-		Let us consider a linear control law $\bo{u}_i = - \bo{K}_i \bo{x}_i$. Given initial conditions $\bo{x}_0$ we find $\bo{x}_1$ as:
-		
-		\begin{equation}
-			\bo{x}_1 =(\bo{A} -  \bo{B}\bo{K}_i )\bo{x}_0
-		\end{equation}
-		
-		let us define components of the cost associated with each iteration as $J_1$, $J_2$, etc:
-		
-		\begin{equation}
-			J_i = \bo{x}_i\T \bo{Q} \bo{x}_i +  \bo{u}_i\T \bo{R} \bo{u}_i
-		\end{equation}
-		
-		Since $\bo{u}_0 = - \bo{K} \bo{x}_0$ we can show that $J_1$ is a quadratic form of initial conditions:
-		
-		\begin{equation}
-			J_0 = \bo{x}_0\T (\bo{Q}+   \bo{K}_i\T \bo{R} \bo{K}_i) \bo{x}_0
-		\end{equation}
-		
-		Similarly, we can show that all $J_i$ can be written as a quadratic form of initial conditions.
-		
-	\end{flushleft}
-\end{frame}
-
-
-
-
 \begin{frame}{Cost-to-go, 1}
 	%	\framesubtitle{Numerical methods}
 	\begin{flushleft}
@@ -422,13 +497,13 @@ There are a number of ways to solve LQR:
 		Let us define cost-to-go as optimal cost for given initial conditions:
 		%
 		\begin{equation}
-			V_0 = \underset{\bo{u}}{\text{min}} \sum_{i=0}^N (\bo{x}_i\T \bo{Q} \bo{x}_i +  \bo{u}_i\T \bo{R} \bo{u}_i)
+			V_0 = \underset{\bo{u}}{\text{min}} \sum_{i=0}^\infty (\bo{x}_i\T \bo{Q} \bo{x}_i +  \bo{u}_i\T \bo{R} \bo{u}_i)
 		\end{equation}
 		
 		If $\bo{x}_0$, $\bo{x}_1$, $\bo{x}_2$, ... is a sequence of states that form an optimal trajectory, let us define the cost-to-go starting from each of these states as:
 		%
 		\begin{equation}
-			V_i =  \underset{\bo{u}}{\text{min}} \sum_{k = i}^N (\bo{x}_k\T \bo{Q} \bo{x}_k +  \bo{u}_k\T \bo{R} \bo{u}_k)
+			V_i =  \underset{\bo{u}}{\text{min}} \sum_{k = i}^\infty (\bo{x}_k\T \bo{Q} \bo{x}_k +  \bo{u}_k\T \bo{R} \bo{u}_k)
 		\end{equation}
 		
 		We can note that the optimal cost will take a form of a quadratic function:
@@ -449,16 +524,17 @@ There are a number of ways to solve LQR:
 	%	\framesubtitle{Numerical methods}
 	\begin{flushleft}
 		
-		
-		Defining $\bo{x}_0 = \bo{z}$ and $\bo{u}_0 = \bo{w}$ we can write cost-to-go as:
+		We can write cost-to-go as:
 		
 		\begin{equation}
 			\label{Bellman}
-			V_0(\bo{z}) = \underset{\bo{w}}{\text{min}} 
-			(\bo{z}\T \bo{Q} \bo{z} +  \bo{w}\T \bo{R} \bo{w}  + V_1(\bo{A}\bo{z} + \bo{B}\bo{w})  )
+			V_i(\bo{x}_i) = \underset{\bo{u}_i}{\text{min}} 
+						\left(
+						\bo{x}_i\T \bo{Q} \bo{x}_i +  \bo{u}_i\T \bo{R} \bo{u}_i  + V_{i+1}(\bo{x}_{i+1})  
+						\right)
 		\end{equation}
 		%
-		where $V_1(\bo{A}\bo{z} + \bo{B}\bo{w})$ is the optimal cost-to-go on the next step. 
+		where $V_{i+1}(\bo{x}_{i+1})$ is the optimal cost-to-go on the next step. 
 		
 		\bigskip
 		
@@ -477,59 +553,34 @@ There are a number of ways to solve LQR:
 	%	\framesubtitle{Numerical methods}
 	\begin{flushleft}
 		
-		Since $V_0 = \bo{x}_0\T \bo{P}_0 \bo{x}_0$ and $V_1 = \bo{x}_1\T \bo{P}_1 \bo{x}_1$ we can re-write Bellman equation as:
+		Since $V_i = \bo{x}_i\T \bo{P}_i \bo{x}_i$ and $V_{i+1} = \bo{x}_{i+1}\T \bo{P}_{i+1} \bo{x}_{i+1}$ we can re-write Bellman equation as:
 		
 		\begin{equation}
-			\bo{z}\T \bo{P}_0 \bo{z}
-			 = \underset{\bo{w}}{\text{min}} 
-			(\bo{z}\T \bo{Q} \bo{z} +  \bo{w}\T \bo{R} \bo{w}  + 
-			(\bo{A}\bo{z} + \bo{B}\bo{w})\T \bo{P}_1 (\bo{A}\bo{z} + \bo{B}\bo{w}) 
-			 )
+						\bo{x}_i\T \bo{P}_i \bo{x}_i = \underset{\bo{u}_i}{\text{min}} 
+			\left(
+			\bo{x}_i\T \bo{Q} \bo{x}_i +  \bo{u}_i\T \bo{R} \bo{u}_i  + \bo{x}_{i+1}\T \bo{P}_{i+1} \bo{x}_{i+1}
+			 \right)
 		\end{equation}
 		
-		To find minimum over $\bo{w}$ we take partial derivative and set it to zero:
+		To find minimum over $\bo{u}_i$ we set partial derivative to zero:
 		
-		\begin{align}
-			\frac{\partial}{\partial \bo{w}}
+		\begin{align*}
+			\frac{\partial}{\partial \bo{u}_i}
 			\left( 
-			\bo{z}\T \bo{Q} \bo{z} +  \bo{w}\T \bo{R} \bo{w}  + 
-			(\bo{A}\bo{z} + \bo{B}\bo{w})\T \bo{P}_1 (\bo{A}\bo{z} + \bo{B}\bo{w}) 
+			\bo{x}_i \T \bo{Q} \bo{x}_i  +  \bo{u}_i\T \bo{R}\bo{u}_i + 
+			(\bo{A}\bo{x}_i  + \bo{B}\bo{u}_i)\T \bo{P}_{i+1} (\bo{A}\bo{x}_i  + \bo{B}\bo{u}_i) 
 			\right) = 0
-		\end{align}
-		%
-		\begin{align}
-		2\bo{w}\T \bo{R}  + 
-		2(\bo{A}\bo{z} + \bo{B}\bo{w})\T \bo{P}_1 \bo{B} = 0
-		\end{align}
-		%
-		\begin{align}
-			\bo{R}\bo{w} + \bo{B}\T \bo{P}_1 \bo{B} \bo{w} + \bo{B}\T \bo{P}_1 \bo{A}\bo{z} = 0
-		\end{align}
-		
-	\end{flushleft}
-\end{frame}
-
-
-
-
-\begin{frame}{Discrete LQR, 2}
-	%	\framesubtitle{Numerical methods}
-	\begin{flushleft}
-		
-		From $\bo{R}\bo{w} + \bo{B}\T \bo{P}_1 \bo{B} \bo{w} + \bo{B}\T \bo{P}_1 \bo{A}\bo{z} = 0$, we can find expression for the optimal control law:
-		
-		\begin{align}
-			(\bo{R} + \bo{B}\T \bo{P}_1 \bo{B}) \bo{w} = -\bo{B}\T \bo{P}_1 \bo{A}\bo{z}
 			\\
-			\bo{w} = -(\bo{R} + \bo{B}\T \bo{P}_1 \bo{B})^{-1} \bo{B}\T \bo{P}_1 \bo{A}\bo{z}
-		\end{align}
-		
-		In general, given optimal cost-to-go matrix $\bo{P}_{i+1}$we find optimal control law:
-		
-		\begin{equation}
-			\bo{u}_i = -(\bo{R} + \bo{B}\T \bo{P}_{i+1} \bo{B})^{-1} \bo{B}\T \bo{P}_{i+1} \bo{A}\bo{x}_i
-		\end{equation}
-		
+			2\bo{u}_i\T \bo{R}  + 
+			2(\bo{A}\bo{x}_i + \bo{B}\bo{u}_i)\T \bo{P}_{i+1} \bo{B} = 0
+			\\
+			\bo{R}\bo{u}_i + \bo{B}\T \bo{P}_{i+1} \bo{B} \bo{u}_i + \bo{B}\T \bo{P}_{i+1} \bo{A}\bo{x}_i  = 0
+			\\
+			(\bo{R} + \bo{B}\T \bo{P}_{i+1} \bo{B}) \bo{u}_i = -\bo{B}\T \bo{P}_{i+1} \bo{A}\bo{x}_i 
+			\\
+			\bo{u}_i = -(\bo{R} + \bo{B}\T \bo{P}_{i+1} \bo{B})^{-1} \bo{B}\T \bo{P}_{i+1} \bo{A}\bo{x}_i 
+		\end{align*}
+
 		
 	\end{flushleft}
 \end{frame}
@@ -675,11 +726,11 @@ There are a number of ways to solve LQR:
 	%\framesubtitle{}
 	\begin{flushleft}
 		
-		Since optimal cost depends on initial consitions only, we can find a function $J^* = J^*(\bo{z})$ defined over $\R^n$.
+		Since optimal cost depends on initial conditions only, we can find a function $J^* = J^*(\bo{z})$ defined over $\R^n$.
 		
 		\bigskip
 		
-		Lets us consider a trajectory $\bo{x}^* = \bo{x}^*(t, \bo{z})$ and sequential points on this trajectory $\bo{x}_0$, $\bo{x}_1$, $\bo{x}_2$, etc. associated with the time points $t_0$, $t_1$, $t_2$, etc. We can define incurred cost (incurred while moving from the initial state $\bo{z} = \bo{x}_0$ to the given point) for each of these points: $S_0$, $S_1$, $S_2$, etc.:
+		Lets us consider a trajectory $\bo{x}^* = \bo{x}^*(t, \bo{z})$ and sequence of points on this trajectory $\bo{x}_0$, $\bo{x}_1$, $\bo{x}_2$, etc. associated with the time stamps $t_0$, $t_1$, $t_2$, etc. We can define incurred cost (incurred while moving from the initial state $\bo{z} = \bo{x}_0$ to the given point) for each of these points $S_0$, $S_1$, $S_2$, etc. as:
 		
 		\begin{equation}
 			S_i = \int_0^{t_i} g^*(\bo{x}) dt

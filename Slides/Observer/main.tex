@@ -4,7 +4,7 @@
 
 
 \title{Luenberger Observer}
-\subtitle{Control Theory, Lecture 8}
+\subtitle{Control Theory, Lecture 9}
 \author{by Sergei Savin}
 \centering
 \date{\mydate}
@@ -87,7 +87,7 @@ Let us introduce new notation. We have an LTI system of the following form:
 Then:
 
 \begin{itemize}
-\item $\bo{x}$ and $\bo{y}$ are the state and output (actual or true)
+\item $\bo{x}$ and $\bo{y}$ are the state and output (actual, true)
 \item $\hat{\bo{x}}$ and $\hat{\bo{y}} =\bo{C} \hat{\bo{x}}$ are the estimated (observed) state
 and output.
 \end{itemize}
@@ -104,13 +104,13 @@ Notice that we never know true state $\bo{x}$, and therefore for the control pur
 	%\framesubtitle{Observer}
 	\begin{flushleft}
 		
-		How can we quantify the error in our estimation? We can do it directly as state estimation error:
+		We define state estimation error:
 		
 		\begin{equation}
 			\varepsilon = \hat{\bo{x}} - \bo{x}
 		\end{equation}
 		
-		But this is impossible to compute, since we do not know $\bo{x}$. Alternatively, we can compare measured output $\bo{y}$ with estimated output $\hat{\bo{y}} =\bo{C} \hat{\bo{x}}$:
+		But this is impossible to compute, since we do not know $\bo{x}$. However, we can compare measured output $\bo{y}$ with estimated output $\hat{\bo{y}} =\bo{C} \hat{\bo{x}}$:
 		
 		\begin{equation}
 			\Tilde{\bo{y}} = \bo{C} \hat{\bo{x}} - \bo{y} 
@@ -200,12 +200,12 @@ We subtract $\dot {\bo{x}} = \bo{A} \bo{x} + \bo{B} \bo{u}$ from \eqref{eq:Obser
 The observer $\dot {\varepsilon}= 
 (\bo{A} - \bo{L} \bo{C}) \varepsilon$ is \emph{stable} (i.e., the state estimation error tends to zero), as long as the following matrix has eigenvalues with negative real parts:
 
-\[
+\begin{equation}
 \bo{A} - 
 \bo{L} \bo{C} \in \mathbb{H}
-\]
+\end{equation}
 
-We need to find $\bo{L}$. Let us observe a slght difference between observer design and controller design:
+We need to find $\bo{L}$. Let us observe a slight difference between observer design and controller design:
 
 \bigskip
 
@@ -216,7 +216,7 @@ We need to find $\bo{L}$. Let us observe a slght difference between observer des
 
 \bigskip
 
-The gain is on he left side for teh observer, preventing us from using any of our tools (pole placement, LQR) to tune it.
+The gain is on the left side for the observer, preventing us from using any of our tools (pole placement, LQR) to tune it.
 
 \end{flushleft}
 \end{frame}
