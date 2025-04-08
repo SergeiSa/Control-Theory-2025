@@ -61,7 +61,7 @@ There are a number of reasons why we can not directly measure the state of the s
 \item \textbf{Lack of sensors.}
 \item Digital measurements are done in discrete time intervals.
 \item Disruption of measurements.
-\item Un-modelled kinematics or dynamics (links bending, gear box backlash, friction, etc.) making the very definition of the state disconnected from reality we want to represent.
+\item Un-modelled kinematics or dynamics (links bending, gear box backlash, friction, etc.) making the very definition of the state disconnected from the reality we want to represent.
 \item Imprecise, nonlinear and biased sensors.
 \item Other physical effects.
 \end{itemize}
@@ -79,7 +79,7 @@ Let us introduce new notation. We have an LTI system of the following form:
 \begin{cases}
 \dot {\bo{x}} = \bo{A} \bo{x} + \bo{B} \bo{u} \\
 \bo{y} = \bo{C} \bo{x} \\
-\hat{\bo{x}}(t) = \text{estimate} \ (\bo{y}(t)) \\
+\dot{\hat{\bo{x}}} = \text{Observer} \ (\hat{\bo{x}}, \bo{u}, \bo{y}) \\
 \bo{u} = -\bo{K}\hat{\bo{x}}
 \end{cases}
 \end{equation}
@@ -142,7 +142,7 @@ with measurements $\bo{y}$. We want to get as good an estimate of the state $\ha
 
 Proposal: the dynamics should also hold for the observed state:
 \begin{equation}
-\hat{\dot {\bo{x}}} = \bo{A} \hat{\bo{x}} + \bo{B} \bo{u}
+\dot{\hat{\bo{x}}} = \bo{A} \hat{\bo{x}} + \bo{B} \bo{u}
 \end{equation}
 %
 If we knew the initial conditions exactly, we could find the exact state of the system without using measurements $\bo{y}$. We can call it an open loop observation. Unfortunately, we do not know the initial conditions precisely.
@@ -163,7 +163,7 @@ We propose \emph{observer} that takes into account measurements in a linear way;
 
 \begin{equation}
 \label{eq:Observer}
-\hat{\dot {\bo{x}}} = \bo{A} \hat{\bo{x}} + \bo{B} \bo{u} + \bo{L}(\bo{y} - \bo{C} \hat{\bo{x}})
+\dot{\hat{\bo{x}}}  = \bo{A} \hat{\bo{x}} + \bo{B} \bo{u} + \bo{L}(\bo{y} - \bo{C} \hat{\bo{x}})
 \end{equation}
 %
 This is called \emph{Luenberger observer}. The next task is to find suitable observer gain $ \bo{L}$.
@@ -173,11 +173,11 @@ This is called \emph{Luenberger observer}. The next task is to find suitable obs
 We subtract $\dot {\bo{x}} = \bo{A} \bo{x} + \bo{B} \bo{u}$ from \eqref{eq:Observer}, to get \emph{observer error dynamics}:
 
 \begin{align}
-\hat{\dot {\bo{x}}} - \dot {\bo{x}}= 
+\dot{\hat{\bo{x}}} - \dot {\bo{x}}= 
 \bo{A} \hat{\bo{x}} - \bo{A} \bo{x} + 
 \bo{L}(\mathbf y - \bo{C} \hat{\bo{x}})
 \\
-\hat{\dot {\bo{x}}} - \dot {\bo{x}}
+\dot{\hat{\bo{x}}} - \dot {\bo{x}}
 = 
 \bo{A} (\hat{\bo{x}} -  \bo{x} ) - 
 \bo{L}(\bo{C} \hat{\bo{x}} -  \bo{C} \bo{x} ) 
@@ -263,7 +263,7 @@ Thus we get dynamics+observer combination:
 \begin{equation}
 \begin{cases}
 \dot {\bo{x}} = \bo{A} \bo{x} + \bo{B} \bo{u} \\
-\hat{\dot {\bo{x}}} = \bo{A} \hat{\bo{x}} + \bo{B} \mathbf u + \bo{L}(\mathbf y - \bo{C} \hat{\bo{x}})\\
+\dot{\hat{\bo{x}}}  = \bo{A} \hat{\bo{x}} + \bo{B} \mathbf u + \bo{L}(\mathbf y - \bo{C} \hat{\bo{x}})\\
 \bo{y} = \bo{C} \bo{x} \\
 \bo{u} = -\bo{K} \hat{\bo{x}}
 \end{cases}
@@ -280,7 +280,7 @@ Let us re-write the dynamics:
 	\begin{cases}
 		\dot {\bo{x}} =\bo{A} \bo{x} - \bo{B} \bo{K} \hat{\bo{x}} 
 		\\
-		\hat{\dot {\bo{x}}} = \bo{A} \hat{\bo{x}} - \bo{B} \bo{K}\hat{\bo{x}} +\bo{L}\bo{C} \bo{x} - \bo{L}\bo{C} \hat{\bo{x}}
+		\dot{\hat{\bo{x}}}  = \bo{A} \hat{\bo{x}} - \bo{B} \bo{K}\hat{\bo{x}} +\bo{L}\bo{C} \bo{x} - \bo{L}\bo{C} \hat{\bo{x}}
 	\end{cases}
 \end{equation}
 
@@ -301,7 +301,7 @@ Let us re-write the dynamics
 \begin{cases}
 \dot {\bo{x}} = \textcolor{mydarkblue}{\bo{A}} \bo{x} \textcolor{mydarkpink}{- \bo{B} \bo{K}} \hat{\bo{x}} 
 \\
-\hat{\dot {\bo{x}}} = \textcolor{mydarkgray}{\bo{A}} \hat{\bo{x}} \textcolor{mydarkgray}{- \bo{B} \bo{K}} \hat{\bo{x}} + \textcolor{mydarkgreen}{\bo{L}\bo{C}} \bo{x} \textcolor{mydarkgray}{- \bo{L}\bo{C}} \hat{\bo{x}}
+\dot{\hat{\bo{x}}} = \textcolor{mydarkgray}{\bo{A}} \hat{\bo{x}} \textcolor{mydarkgray}{- \bo{B} \bo{K}} \hat{\bo{x}} + \textcolor{mydarkgreen}{\bo{L}\bo{C}} \bo{x} \textcolor{mydarkgray}{- \bo{L}\bo{C}} \hat{\bo{x}}
 \end{cases}
 \end{equation}
 
@@ -310,7 +310,7 @@ in a matrix form:
 \begin{equation}
 \begin{bmatrix}
 \dot {\bo{x}} \\
-\hat{\dot {\bo{x}}}
+\dot{\hat{\bo{x}}} 
 \end{bmatrix}
 =
 \begin{bmatrix}
@@ -344,7 +344,7 @@ Our system had form:
 \begin{equation}
 \begin{cases}
 \dot {\bo{x}} = \textcolor{mydarkblue}{\bo{A} \bo{x} - \bo{B}\bo{K} \hat{\bo{x}}} \\
-\hat{\dot {\bo{x}}} = \textcolor{mydarkpink}{\bo{A} \hat{\bo{x}} - \bo{B}\bo{K} \hat{\bo{x}} + \bo{L}\bo{C} \bo{x} - \bo{L}\bo{C} \hat{\bo{x}}}
+\dot{\hat{\bo{x}}}  = \textcolor{mydarkpink}{\bo{A} \hat{\bo{x}} - \bo{B}\bo{K} \hat{\bo{x}} + \bo{L}\bo{C} \bo{x} - \bo{L}\bo{C} \hat{\bo{x}}}
 \end{cases}
 \end{equation}
 

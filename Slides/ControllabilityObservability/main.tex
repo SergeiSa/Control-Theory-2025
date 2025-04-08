@@ -38,29 +38,6 @@
 
 
 
-\begin{frame}{Cayley–Hamilton}
-	% \framesubtitle{Limited control}
-	\begin{flushleft}
-		
-		Equation $\text{det}(\bo{M} - \lambda\bo{I}) = 0$ is called \emph{characteristic equation} of matrix $\bo{M}$, its roots being eigenvalues of the matrix.
-		
-		\bigskip
-		
-		\begin{theorem}[Cayley–Hamilton]
-			A matrix $\bo{M} \in \R^{n, n}$ satisfies its own characteristic equation.
-		\end{theorem}
-		
-		A characteristic equation can be written as $\lambda^n + a_{n-1}\lambda^{n-1} + ... + a_0  = 0$, meaning that we can write:
-		
-		\begin{equation}
-			\bo{M}^n + a_{n-1}\bo{M}^{n-1} + ... + a_0\bo{I}  = 0
-		\end{equation}	
-		
-		Meaning that \textcolor{mydarkblue}{$\bo{M}^n$ is a linear combination of $\bo{M}^{n-1}$, $\bo{M}^{n-2}$, ..., $\bo{I}$}.
-		
-		
-	\end{flushleft}
-\end{frame}
 
 
 \begin{frame}{Definitions}
@@ -104,6 +81,7 @@ Assume the initial state is $\bo{x}_1$. Then we can deduce that:
 ... \\
 \bo{x}_{n+1} &= \bo{A}^n \bo{x}_1 + \bo{A}^{n-1} \bo{B} \bo{u}_1 + ... + 
 \bo{A}^{n - k} \bo{B} \bo{u}_{k} + ... + 
+\bo{A} \bo{B} \bo{u}_{n-1} +
 \bo{B} \bo{u}_n
 \end{align*}
 
@@ -116,9 +94,9 @@ Assume the initial state is $\bo{x}_1$. Then we can deduce that:
 %\framesubtitle{Controllability matrix}
 \begin{flushleft}
 
-Equation $\bo{x}_{n+1} = \bo{A}^n \bo{x}_1 + \bo{A}^{n-1} \bo{B} \bo{u}_1 + ... 
-+ \bo{A}^{n - k} \bo{B} \bo{u}_{k} + ...
-\bo{B} \bo{u}_n$ can be re-written as:
+$\bo{x}_{n+1} = \bo{A}^n \bo{x}_1 + \bo{A}^{n-1} \bo{B} \bo{u}_1 + ... 
++ \bo{A}^{n - k} \bo{B} \bo{u}_{k} + ... +
+\bo{A} \bo{B} \bo{u}_{n-1} + \bo{B} \bo{u}_n$ can be re-written as:
 
 \begin{equation}
     \bo{x}_{n+1} - \bo{A}^n \bo{x}_1 = 
@@ -153,16 +131,40 @@ Since $\bo{x}_{n+1}$ can be anything, and $\bo{x}_1$ might be equal to zero (amo
 \begin{flushleft}
 
 \begin{block}{Controllability}
-For a system $\bo{x}_{i+1} = \bo{A}  \bo{x}_i + \bo{B} \bo{u}_i$, where $\bo{x} \in \R^n$, if the matrix $\mathcal{C} = \begin{bmatrix}
+The system $\bo{x}_{i+1} = \bo{A}  \bo{x}_i + \bo{B} \bo{u}_i$, $\bo{x} \in \R^n$ is \emph{controllable} if its controllability matrix $\mathcal{C} = \begin{bmatrix}
     \bo{B} &
     \bo{A} \bo{B} & ... &
     \bo{A}^{n - 1} \bo{B}
-    \end{bmatrix}$ is full row rank (i.e. $\text{rank}(\mathcal{C}) = n$), any state can be reached, which means that \emph{the system is controllable}.
+    \end{bmatrix}$ is full row-rank ($\text{rank}(\mathcal{C}) = n$).
 \end{block}
 
 \end{flushleft}
 \end{frame}
 
+
+
+\begin{frame}{Cayley–Hamilton}
+	% \framesubtitle{Limited control}
+	\begin{flushleft}
+		
+		Equation $\text{det}(\bo{M} - \lambda\bo{I}) = 0$ is called \emph{characteristic equation} of matrix $\bo{M}$, its roots being eigenvalues of the matrix.
+		
+		\bigskip
+		
+		\begin{theorem}[Cayley–Hamilton]
+			A matrix $\bo{M} \in \R^{n, n}$ satisfies its own characteristic equation.
+		\end{theorem}
+		
+		A characteristic equation can be written as $\lambda^n + a_{n-1}\lambda^{n-1} + ... + a_0  = 0$, meaning that we can write:
+		
+		\begin{equation}
+			\bo{M}^n + a_{n-1}\bo{M}^{n-1} + ... + a_1\bo{M} + a_0\bo{I}  = 0
+		\end{equation}	
+		
+		Meaning that \textcolor{mydarkblue}{$\bo{M}^n$ is a linear combination of $\bo{M}^{n-1}$, $\bo{M}^{n-2}$, ..., $\bo{I}$}. See Appendix.
+		
+	\end{flushleft}
+\end{frame}
 
 
 
@@ -193,38 +195,6 @@ For a system $\bo{x}_{i+1} = \bo{A}  \bo{x}_i + \bo{B} \bo{u}_i$, where $\bo{x} 
 		
 	\end{flushleft}
 \end{frame}
-
-
-%\begin{frame}{Controllability matrix rank}
-%	% \framesubtitle{Limited control}
-%	\begin{flushleft}
-%		
-%		If you are interested why the controllability matrix for not include more columns, like $\bo{A}^n$, Consider the following: 
-%		
-%		The controllability matrix can be written as 
-%		
-%		\begin{equation}
-%			\mathcal{C} = \begin{bmatrix}
-%				\bo{I} &
-%				\bo{A}  & ... &
-%				\bo{A}^{n - 1} 
-%			\end{bmatrix}
-%			\begin{bmatrix}
-%				\bo{B} & \bo{0} & ... & \bo{0} \\
-%				\bo{0}  & \bo{B} & ... & \bo{0} \\
-%				...  & ... & ... & ... \\
-%				\bo{0}  & \bo{0} & ... & \bo{B} 
-%			\end{bmatrix}
-%		\end{equation}
-%		
-%		meaning that the rank of $\mathcal{C}$ depends only on matrix $\begin{bmatrix}
-%			\bo{I} &
-%			\bo{A}  & ... &
-%			\bo{A}^{n - 1} 
-%		\end{bmatrix}$. Adding  to it columns $\bo{A}^n$ does not change the rank, as $\bo{A}^n$ is a linear combination of the other columns, as we proved in the previous slide.
-%		
-%	\end{flushleft}
-%\end{frame}
 
 
 
@@ -311,11 +281,11 @@ It is easier to represent this matrix in its transposed form:
 \begin{flushleft}
 
 \begin{block}{Observability}
-For a system $\bo{x}_{i+1} = \bo{A}  \bo{x}_i + \bo{B} \bo{u}_i$ and $\bo{y}_i = \bo{C}  \bo{x}_i$, where $\bo{x} \in \R^n$, if the matrix $\mathcal{O} = \begin{bmatrix}
+The system $\bo{x}_{i+1} = \bo{A}  \bo{x}_i + \bo{B} \bo{u}_i$ and $\bo{y}_i = \bo{C}  \bo{x}_i$, $\bo{x} \in \R^n$ is \emph{observable}, if the observability matrix $\mathcal{O} = \begin{bmatrix}
     \bo{C} \\
     \bo{C}\bo{A}  \\ ... \\
     \bo{C}\bo{A}^{n - 1}
-    \end{bmatrix}$ is full column rank (i.e. $\text{rank}(\mathcal{O}) = n$), observation error can go to zero from any initial position, which means that \emph{the system is observable}.
+    \end{bmatrix}$ is full column-rank ($\text{rank}(\mathcal{O}) = n$).
 \end{block}
 
 \end{flushleft}
@@ -328,7 +298,7 @@ For a system $\bo{x}_{i+1} = \bo{A}  \bo{x}_i + \bo{B} \bo{u}_i$ and $\bo{y}_i =
 	% \framesubtitle{Limited control}
 	\begin{flushleft}
 		
-		Let us consider matrix exponential $e^{\bo{A}t}$ is defined as a series:
+		Matrix exponential $e^{\bo{A}t}$ is defined as a series:
 		
 		\begin{equation}
 			e^{\bo{A}t} = \bo{I}+\bo{A}t+\frac{1}{2} \bo{A}\bo{A}t^2
@@ -389,7 +359,7 @@ For a system $\bo{x}_{i+1} = \bo{A}  \bo{x}_i + \bo{B} \bo{u}_i$ and $\bo{y}_i =
 		\end{bmatrix}
 		\end{align*}
 		
-		This shows that if controllability matrix is rank-deficient, it would not be possible to achieve some state from some initial condition.
+		If the controllability matrix is rank-deficient, there will exist a state $\bo{x}_f$ and which cannot be reached from some initial conditions $\bo{x}_0$.
 		
 	\end{flushleft}
 \end{frame}
@@ -401,18 +371,18 @@ For a system $\bo{x}_{i+1} = \bo{A}  \bo{x}_i + \bo{B} \bo{u}_i$ and $\bo{y}_i =
 	% \framesubtitle{Limited control}
 	\begin{flushleft}
 		
-		There is an alternative way to test if pair $(\bo{A}, \ \bo{B})$ is controllable:
+		There is an alternative way to test the controllability of a pair $(\bo{A}, \ \bo{B})$:
 		
 		\begin{block}{PBH controllability criterion}
-			If for any $\lambda \in \mathbb{C}$, the the matrix $[ (\bo{A}-\lambda\bo{I}), \bo{B}]$ has full row rank, then the pair $(\bo{A}, \ \bo{B})$ is controllable.
+			If for any $\lambda \in \mathbb{C}$, the matrix $[ (\bo{A}-\lambda\bo{I}), \bo{B}]$ has full row-rank, then the pair $(\bo{A}, \ \bo{B})$ is controllable.
 		\end{block}
 		
 		\begin{itemize}
 			\item If $\lambda$ is not an eigenvalue of $\bo{A}$, then $\text{det}(\bo{A}-\lambda\bo{I}) \neq 0$ and the matrix has full row rank.
 			
-			\item If $\text{det}(\bo{A}-\lambda\bo{I}) = 0$ and $\mathcal{V} = \text{null}(\bo{A}-\lambda\bo{I})$, $\text{dim}(\mathcal{V}) = 1$ and $\bo{v} \in \mathcal{V}$ , meaning $\lambda, \ \bo{v}$ are eigenvalue and eigenvector of $\bo{A}$, then in order for the criterion to hold the columns of $\bo{B}$ should not all be orthogonal to $\bo{v}$: $\bo{v}\T \bo{B} \neq 0$.
+			\item If $\text{det}(\bo{A}-\lambda\bo{I}) = 0$ it is sufficient to test the rank of $[ (\bo{A}-\lambda\bo{I}), \bo{B}]$.
 			
-			\item If eigenspace $\mathcal{V}$ is $k$-dimensional, the projection of $\bo{B}$ onto that eigenspace should also be $k$-dimensional.
+			%\item If $\text{det}(\bo{A}-\lambda\bo{I}) = 0$ and $\mathcal{V} = \text{null}(\bo{A}-\lambda\bo{I})$, $\text{dim}(\mathcal{V}) = 1$ and $\bo{v} \in \mathcal{V}$ , meaning $\lambda, \ \bo{v}$ are eigenvalue and eigenvector of $\bo{A}$, then in order for the criterion to hold the columns of $\bo{B}$ should not all be orthogonal to $\bo{v}$: $\bo{v}\T \bo{B} \neq 0$.
 			
 		\end{itemize}
 		
@@ -579,6 +549,51 @@ For a system $\bo{x}_{i+1} = \bo{A}  \bo{x}_i + \bo{B} \bo{u}_i$ and $\bo{y}_i =
 \end{frame}
 
 
+
+
+\begin{frame}{Cayley–Hamilton illustration}
+	% \framesubtitle{Limited control}
+	\begin{flushleft}
+		
+		Consider matrix $\bo{M}$ and its characteristic equation $\lambda^n + a_{n-1}\lambda^{n-1} + ... + a_0  = 0$ and a decomposition $\bo{M} = \bo{V}^{-1}\Lambda \bo{V}$. Let's prove that the following expression is zero:
+		%
+		\begin{equation}
+			\bo{E} = \bo{M}^n + a_{n-1}\bo{M}^{n-1} + ... + a_1\bo{M} + a_0\bo{I}
+		\end{equation}	
+		\begin{equation}
+		\bo{E} = \bo{V}^{-1}\Lambda^n \bo{V} + a_{n-1}\bo{V}^{-1}\Lambda^{n-1} \bo{V} + ... + a_1\bo{V}^{-1}\Lambda \bo{V} + a_0\bo{I}
+		\end{equation}	
+		\begin{equation}
+		 \bo{V}\bo{E} \bo{V}^{-1} = \Lambda^n + a_{n-1}\Lambda^{n-1}  + ... + a_1\Lambda+ a_0\bo{V}\bo{V}^{-1} 
+		\end{equation}	
+		\begin{small}
+			\begin{equation}
+				\bo{V}\bo{E} \bo{V}^{-1} = 
+				\begin{bmatrix}
+					(\lambda_1^n + a_{n-1}\lambda_1^{n-1} + ... + a_0 ) & & \\
+					& ... & \\
+					& & (\lambda_n^n + a_{n-1}\lambda_n^{n-1} + ... + a_0 )
+				\end{bmatrix}
+			\end{equation}	
+		\begin{equation}
+		\bo{V}\bo{E} \bo{V}^{-1} = 
+		\begin{bmatrix}
+			0 & & \\
+			& ... & \\
+			& & 0
+		\end{bmatrix}
+		\end{equation}	
+	\end{small}
+		\begin{equation}
+		\bo{V}\bo{E} \bo{V}^{-1} = 0
+		\end{equation}	
+		\begin{equation}
+		0 = \bo{E} = \bo{M}^n + a_{n-1}\bo{M}^{n-1} + ... + a_1\bo{M} + a_0\bo{I} \ \qed
+		\end{equation}	
+		
+		
+	\end{flushleft}
+\end{frame}
 
 
 

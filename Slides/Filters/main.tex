@@ -44,7 +44,7 @@ $\begin{cases}
 	\end{cases}$ 
 relates its input $\bo{u}$ to its output $\bo{y}$.
 
-	\item Plant (in Laplace representation) $Y(s) = W(s)X(s)$ with a transfer function $W(s)$ is a system relating its input signal $X(s)$ to its output signal $Y(s)$.
+	\item Plant (in Laplace representation) $Y(s) = W(s)U(s)$ with a transfer function $W(s)$ is a system relating its input signal $U(s)$ to its output signal $Y(s)$.
 \end{itemize}
 
 \end{flushleft}
@@ -56,11 +56,7 @@ relates its input $\bo{u}$ to its output $\bo{y}$.
 	%\framesubtitle{How do we know the state?}
 	\begin{flushleft}
 		
-		In this lecture we consider linear systems only. 
-		
-		\bigskip
-		
-		For some systems, the relation between input and output does not depend on time. Such system we can call \emph{static}.
+		For some systems, the relation between input and output is proportional. Such system we can call \emph{static}.
 		
 		\bigskip
 		
@@ -69,7 +65,7 @@ relates its input $\bo{u}$ to its output $\bo{y}$.
 		\begin{itemize}
 			\item (State-Space) controller $\bo{u} = \bo{K}\bo{x}$. 
 			
-			\item (Laplace) gain function $Y(s) = 10 X(s)$.
+			\item (Laplace) gain function $Y(s) = 10 U(s)$.
 		\end{itemize}
 		
 	\end{flushleft}
@@ -80,7 +76,7 @@ relates its input $\bo{u}$ to its output $\bo{y}$.
 	%\framesubtitle{How do we know the state?}
 	\begin{flushleft}
 		
-		Alternatively, there are linear systems for which relation between input and output depends on time. Such system we can call \emph{dynamic}.
+		Alternatively, there are linear systems for which relation between input and output depends on derivatives of the input and the output. Such system we can call \emph{dynamic}.
 		
 		\bigskip
 		
@@ -92,14 +88,10 @@ relates its input $\bo{u}$ to its output $\bo{y}$.
 				\bo{y} = \bo{C} \bo{x}
 			\end{cases}$.
 			
-			\item (Laplace) plant $Y(s) = \frac{1}{s^2 + 2s + 7} X(s)$.
+			\item (Laplace) plant $Y(s) = \frac{1}{s^2 + 2s + 7} U(s)$.
 			
 			\item (ODE) plant $\ddot y + 5 \dot y + y = u$.
 		\end{itemize}
-		
-		\bigskip
-		
-		For these systems, the output depends not only on the current (time-wise) value of the input, but on the entire history of input values.
 		
 	\end{flushleft}
 \end{frame}
@@ -110,11 +102,11 @@ relates its input $\bo{u}$ to its output $\bo{y}$.
 	%\framesubtitle{How do we know the state?}
 	\begin{flushleft}
 		
-		We can think of static systems as a form of algebraic linear equations, while dynamic systems are linear differential equations.
+		We can think of static systems as a form of linear algebraic equations, while dynamic systems are linear differential equations.
 		
 		\bigskip
 		
-		The dintinguishing quality of dynamic systems is that they have \emph{state}. We can think of state as an internal variable which changes with time, affecting the relation between the input and the output of the system.
+		The distinguishing quality of dynamic systems is that they have a \emph{state}. We can think of the state as an internal variable which changes with time, affecting the relation between the input and the output of the system.
 		
 	\end{flushleft}
 \end{frame}
@@ -125,7 +117,7 @@ relates its input $\bo{u}$ to its output $\bo{y}$.
 	%\framesubtitle{How do we know the state?}
 	\begin{flushleft}
 		
-		Controller + Luenberger observer is also a dynamical system with input $\bo{y}$, output $\bo{u}$ and state $\hat{\bo{x}}$:
+		Controller + Luenberger observer is also a dynamic system with input $\bo{y}$, output $\bo{u}$ and state $\hat{\bo{x}}$:
 		
 		\begin{equation}
 			\begin{cases}
@@ -188,7 +180,7 @@ relates its input $\bo{u}$ to its output $\bo{y}$.
 			\bo{u}(t) = \bo{K}_p \bo{e}(t) + \bo{K}_d \frac{d}{dt} \bo{e}(t) + \bo{K}_i \int_{0}^{t} \bo{e}(\tau) d \tau
 		\end{equation}
 		
-		This controller works for second-order systems (in $\bo{e}(t)$) where $\bo{e}$ and $\dot{\bo{e}}$ are the state of the system.
+		This controller works for second-order systems (in $\bo{e}(t)$) where $\bo{e}$ and $\dot{\bo{e}}$ form the state of the system (or control error).
 		
 		\bigskip
 		
@@ -246,6 +238,124 @@ relates its input $\bo{u}$ to its output $\bo{y}$.
 		
 	\end{flushleft}
 \end{frame}
+
+
+
+
+\begin{frame}{Static disturbance, 1}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		Consider a system with a static disturbance $\bo{d}$:
+		
+		\begin{equation}
+				\dot {\bo{x}} = \bo{A} \bo{x} + \bo{B} \bo{u} + \bo{d}
+		\end{equation}
+		
+		Applying a stabilizing linear control law $\bo{u} = -\bo{K}\bo{x}$ we find that the closed-loop system $\dot {\bo{x}} =( \bo{A} -  \bo{B}  \bo{K}  )\bo{x} + \bo{d}$ has a steady-state solution $\bo{x}_s$:
+		
+		\begin{align}
+			( \bo{A} -  \bo{B}  \bo{K}  )\bo{x}_s + \bo{d} = 0
+			\\
+			\bo{x}_s = -( \bo{A} -  \bo{B}  \bo{K}  )^{-1} \bo{d}
+		\end{align}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+\begin{frame}{Static disturbance, 2}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		We can achieve the same result using Laplace representation:
+		
+		\begin{equation}
+			\begin{cases}
+				s \bo{X} = \bo{A} \bo{X} + \bo{B} \bo{U} + \bo{D} \\
+				\bo{U} = -\bo{K}\bo{X}
+			\end{cases}
+		\end{equation}
+		\begin{equation}
+			s \bo{X} -( \bo{A} - \bo{B} \bo{K})\bo{X} = \bo{D}
+		\end{equation}
+		\begin{equation}
+		\bo{X} =(s \bo{I} -( \bo{A} - \bo{B} \bo{K}))^{-1} \bo{D}
+		\end{equation}
+		
+		With a steady-state gain $-( \bo{A} - \bo{B} \bo{K}))^{-1}$, same as above.
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Static disturbance compensation, 1}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		If we know static disturbance $\bo{d}$, we could chose a control law $\bo{u} = -\bo{K}\bo{x} - \bo{B}^+\bo{d}$ which will cancel the disturbance (if it lies in the range of the control matrix $\bo{B}$).
+		
+		\bigskip
+		
+		But if we don't know $\bo{d}$, we can use an \emph{integral} component in a control law to compensate the disturbance:
+		
+		\begin{equation}
+			\bo{u} = -\bo{K}_p\bo{x} -\bo{K}_i \int_{0}^{t} \bo{x} d \tau
+		\end{equation}
+		
+		In the Laplace domain it can be represented as:
+		
+		
+		\begin{equation}
+			\begin{cases}
+				s \bo{X} = \bo{A} \bo{X} + \bo{B} \bo{U} + \bo{D} \\
+				\bo{U} = -\bo{K}_p\bo{X} -\frac{1}{s}\bo{K}_i \bo{X}
+			\end{cases}
+		\end{equation}
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
+
+\begin{frame}{Static disturbance compensation, 2}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		\begin{equation}
+			\begin{cases}
+				s \bo{X} = \bo{A} \bo{X} + \bo{B} \bo{U} + \bo{D} \\
+				\bo{U} = -\bo{K}_p\bo{X} -\frac{1}{s}\bo{K}_i \bo{X}
+			\end{cases}
+		\end{equation}
+		
+		We can write it as a transfer function:
+		
+		\begin{equation}
+				s \bo{X} = \bo{A} \bo{X} -\bo{B}\bo{K}_p\bo{X} -\frac{1}{s}\bo{B}\bo{K}_i \bo{X} + \bo{D}
+		\end{equation}
+		\begin{equation}
+		s^2 \bo{X} = s\bo{A} \bo{X} -s\bo{B}\bo{K}_p\bo{X} -\bo{B}\bo{K}_i \bo{X} + \textcolor{mydarkred}{s} \bo{D}
+		\end{equation}
+		\begin{equation}
+		 \bo{X} = \textcolor{mydarkred}{s}
+		  \left(
+		 s^2 \bo{I} - s(\bo{A} - \bo{B}\bo{K}_p) + \bo{B}\bo{K}_i 
+		 \right)^{-1}
+		 \bo{D}
+		\end{equation}
+		
+		Its static-state gain is equal to 0.
+		
+		
+	\end{flushleft}
+\end{frame}
+
+
 
 
 

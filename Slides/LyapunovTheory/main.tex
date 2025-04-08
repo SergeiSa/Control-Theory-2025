@@ -4,7 +4,7 @@
 
 
 \title{Lyapunov Theory, Lyapunov equations}
-\subtitle{Control Theory, Lecture 13}
+\subtitle{Control Theory, Lecture 12}
 \author{by Sergei Savin}
 \centering
 \date{\mydate}
@@ -130,7 +130,7 @@ This satisfies the Lyapunov criteria, so the system is stable. It is in fact asy
 		Local version of LaSalle's invariance principle has the following form:
 		
 		\begin{block}{Local LaSalle's invariance principle}
-			Autonomous dynamic system $\dot{\bo{x}} = \bo{f}(\bo{x})$ is asymptotically stable in the neighborhood $\mathcal D$ of the origin, if there exists a scalar function $V = V(\bo{x}) > 0$, whose time derivative is negative $\dot V(\bo{x}) \leq 0$, except $V(\bo{0}) = 0$, where the set $\mathcal M = \{\bo{x}: \   \dot V(\bo{x}) = 0  \} \cap \mathcal D$ does not contain non-trivial trajectories.
+			Autonomous dynamic system $\dot{\bo{x}} = \bo{f}(\bo{x})$ is asymptotically stable in the neighborhood $\mathcal D$ of the origin, if there exists a scalar function $V = V(\bo{x}) > 0$ (except $V(\bo{0}) = 0$), whose time derivative is non-positive $\dot V(\bo{x}) \leq 0$, where the set $\mathcal M = \{\bo{x}: \   \dot V(\bo{x}) = 0  \} \cap \mathcal D$ does not contain non-trivial trajectories.
 		\end{block}
 		
 		
@@ -188,11 +188,10 @@ This satisfies the Lyapunov criteria, so the system is stable. It is in fact asy
 
 
 
-\begin{frame}{Linear case}
-\framesubtitle{Part 1}
+\begin{frame}{Linear case, 1}
 \begin{flushleft}
 
-As you saw, Lyapunov method allows you to deal with nonlinear systems, as well as linear ones. But for linear ones there are additional properties we can use.
+As you saw, Lyapunov method allows you to deal with nonlinear systems, as well as linear ones. But for linear systems there are additional properties we can use.
 
 \bigskip
 
@@ -202,14 +201,13 @@ For a linear system $\dot{\bo{x}} = \bo{A}\bo{x}$ we can always pick Lyapunov fu
 
 \bigskip
 
-Next slides will shows where this leads us.
+Next slide will shows where this leads us.
 
 \end{flushleft}
 \end{frame}
 
 
-\begin{frame}{Linear case}
-\framesubtitle{Part 2}
+\begin{frame}{Linear case, 2}
 \begin{flushleft}
 
 Given $\dot{\bo{x}} = \bo{A}\bo{x}$ and $V = \bo{x}^\top\bo{S}\bo{x} \geq 0$, let's find its derivative:
@@ -238,8 +236,7 @@ where $\bo{Q}$ is a positive-definite matrix.
 
 
 
-\begin{frame}{Discrete case}
-\framesubtitle{Part 1}
+\begin{frame}{Discrete case, 1}
 \begin{flushleft}
 
 \begin{block}{Asymptotic stability criteria, discrete case}
@@ -255,19 +252,20 @@ Same as before, for linear systems we will be choosing \emph{positive-definite q
 
 
 
-\begin{frame}{Discrete case}
-\framesubtitle{Part 2}
+\begin{frame}{Discrete case, 2}
 \begin{flushleft}
 
 Consider dynamics $\bo{x}_{i+1} = \bo{A}\bo{x}_i$ and $V = \bo{x}_i^\top\bo{S}\bo{x}_i \geq 0$, let's find $V(\bo{x}_{i+1}) - V(\bo{x}_i)$:
 
-\begin{equation}
-    V(\bo{x}_{i+1}) - V(\bo{x}_i) = (\bo{A}\bo{x}_i)^\top\bo{S}\bo{A}\bo{x}_i - 
-    \bo{x}_i^\top\bo{S}\bo{x}_i
-\end{equation}
-\begin{equation}
-    V(\bo{x}_{i+1}) - V(\bo{x}_i) = \bo{x}_i^\top(\bo{A}^\top\bo{S}\bo{A} - \bo{S})\bo{x}_i
-\end{equation}
+\begin{align}
+	V(\bo{x}_{i+1}) - V(\bo{x}_i) &= \bo{x}_{i+1}^\top\bo{S}\bo{x}_{i+1}- 
+	\bo{x}_i^\top\bo{S}\bo{x}_i =
+	\\
+	&= (\bo{A}\bo{x}_i)^\top\bo{S}\bo{A}\bo{x}_i - 
+	\bo{x}_i^\top\bo{S}\bo{x}_i
+	\\
+	&= \bo{x}_i^\top(\bo{A}^\top\bo{S}\bo{A} - \bo{S})\bo{x}_i
+\end{align}
 
 Notice that $V(\bo{x}_{i+1}) - V(\bo{x}_i)$ should be negative for all $\bo{x}_i$ for the system to be stable, meaning that $\bo{A}^\top\bo{S}\bo{A} - \bo{S}$ should be negative definite, giving us \emph{Discrete Lyapunov equation}:
 
