@@ -204,7 +204,7 @@ jobs:
           mv Slides/Discrete/main.pdf Slides/Discrete.pdf
           mv Slides/HJB_LQR/main.pdf Slides/HJB_LQR.pdf
           mv Slides/Observer/main.pdf Slides/Observer.pdf
-          mv Slides/Observer/main.pdf Slides/Filters.pdf
+          mv Slides/Filters/main.pdf Slides/Filters.pdf
           mv Slides/ControllabilityObservability/main.pdf Slides/ControllabilityObservability.pdf
           mv Slides/Kalman/main.pdf Slides/Kalman.pdf
           mv Slides/Linearization/main.pdf Slides/Linearization.pdf
