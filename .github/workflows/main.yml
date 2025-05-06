@@ -41,6 +41,12 @@ jobs:
           root_file: main.tex
           working_directory: Slides/Bode/
 
+      - name: Compile LaTeX document InputResponce
+        uses: xu-cheng/latex-action@master
+        with:
+          root_file: main.tex
+          working_directory: Slides/InputResponce/
+
       - name: Compile LaTeX document Control
         uses: xu-cheng/latex-action@master
         with:
@@ -52,12 +58,6 @@ jobs:
         with:
           root_file: main.tex
           working_directory: Slides/Discrete/
-
-      - name: Compile LaTeX document LyapunovTheory
-        uses: xu-cheng/latex-action@master
-        with:
-          root_file: main.tex
-          working_directory: Slides/LyapunovTheory/
 
       - name: Compile LaTeX document HJB_LQR
         uses: xu-cheng/latex-action@master
@@ -71,11 +71,23 @@ jobs:
           root_file: main.tex
           working_directory: Slides/Observer/
 
+      - name: Compile LaTeX document Filters
+        uses: xu-cheng/latex-action@master
+        with:
+          root_file: main.tex
+          working_directory: Slides/Filters/
+
       - name: Compile LaTeX document ControllabilityObservability
         uses: xu-cheng/latex-action@master
         with:
           root_file: main.tex
           working_directory: Slides/ControllabilityObservability/
+
+      - name: Compile LaTeX document LyapunovTheory
+        uses: xu-cheng/latex-action@master
+        with:
+          root_file: main.tex
+          working_directory: Slides/LyapunovTheory/
 
       - name: Compile LaTeX document Kalman
         uses: xu-cheng/latex-action@master
@@ -154,6 +166,12 @@ jobs:
           name: Observer.pdf
           path: Slides/Observer/main.pdf
 
+      - name: Save Filters artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Filters.pdf
+          path: Slides/Filters/main.pdf
+
       - name: Save ControllabilityObservability artifact
         uses: actions/upload-artifact@v4
         with:
@@ -186,6 +204,7 @@ jobs:
           mv Slides/Discrete/main.pdf Slides/Discrete.pdf
           mv Slides/HJB_LQR/main.pdf Slides/HJB_LQR.pdf
           mv Slides/Observer/main.pdf Slides/Observer.pdf
+          mv Slides/Observer/main.pdf Slides/Filters.pdf
           mv Slides/ControllabilityObservability/main.pdf Slides/ControllabilityObservability.pdf
           mv Slides/Kalman/main.pdf Slides/Kalman.pdf
           mv Slides/Linearization/main.pdf Slides/Linearization.pdf
@@ -202,6 +221,7 @@ jobs:
           git add Slides/Discrete.pdf
           git add Slides/HJB_LQR.pdf
           git add Slides/Observer.pdf
+          git add Slides/Filters.pdf
           git add Slides/ControllabilityObservability.pdf
           git add Slides/Kalman.pdf
           git add Slides/Linearization.pdf
