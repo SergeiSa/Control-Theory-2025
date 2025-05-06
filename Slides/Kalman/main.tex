@@ -10,7 +10,7 @@
 
 
 \title{Kalman Filter}
-\subtitle{Control Theory, Lecture 10}
+\subtitle{Control Theory, Lecture 13}
 \author{by Sergei Savin}
 \centering
 \date{\mydate}
@@ -36,6 +36,33 @@
 \end{itemize}
 \end{frame}
 
+
+
+
+\begin{frame}{Innner and outer products}
+	%\framesubtitle{How do we know the state?}
+	\begin{flushleft}
+		
+		Inner product $\bo{x}\T \bo{x}$ and outter product $\bo{x}\bo{x}\T$ are defined as:
+		%
+		\begin{align*}
+			\bo{x} &= 
+			\begin{bmatrix}
+				x_1 \\ x_2 \\ x_3
+			\end{bmatrix},& 
+			\\
+			\bo{x}\T \bo{x} &= x_1^2+x_2^2+x_3^2, 
+			\\
+			\bo{x}\bo{x}\T &= 
+			\begin{bmatrix}
+				x_1^2    & x_1 x_2 & x_1 x_3 \\ 
+				x_2 x_1 & x_2^2    & x_2 x_3 \\ 
+				x_3 x_1 & x_3 x_2 & x_3^2
+			\end{bmatrix}
+		\end{align*}	
+		
+	\end{flushleft}
+\end{frame}
 
 
 
@@ -161,6 +188,8 @@ Mean has a number of properties:
 			&=E[(\bo{M}\bo{x})(\bo{M}\bo{x})\T]=
 			\\
 			&=E[\bo{M}\bo{x}\bo{x}\T \bo{M}\T]=
+			\\
+			&=\bo{M}E[\bo{x}\bo{x}\T ]\bo{M}\T=
 			\\
 			&=\bo{M}\bo{X} \bo{M}\T
 		\end{align*}
@@ -411,12 +440,20 @@ Mean has a number of properties:
 	%\framesubtitle{How do we know the state?}
 	\begin{flushleft}
 		
-		We can compute autocovariance dynamics (propagation). Below is \emph{a priori} estimation error covariance:
+		We can compute autocovariance dynamics (propagation). Below is sn \emph{a priori} estimation error covariance:
 		%
 		\begin{align*}
 				\bo{P}_{i+1}^- 
 				&= E[\btil{x}_{i+1}^- (\btil{x}_{i+1}^-)\T] = \\
-				&= E[ (\bo{A} \btil{x}_i + \bo{w}_i) (\bo{A} \btil{x}_i + \bo{w}_i)\T] = \\
+				&= E[ (\bo{A} \btil{x}_i + \bo{w}_i) (\bo{A} \btil{x}_i + \bo{w}_i)\T] = 
+				\\
+				&= E[ \bo{A} \btil{x}_i \btil{x}_i\T   \bo{A}\T
+				+ 
+				\bo{A} \btil{x}_i \bo{w}_i\T 
+				+
+				\bo{w}_i\btil{x}_i \T\bo{A}\T
+				+
+				\bo{w}_i\bo{w}_i\T ]=\\
 				&= \bo{A} \bo{P}_i \bo{A}\T +\bo{Q}.
 		\end{align*}		
 	
@@ -478,7 +515,7 @@ Mean has a number of properties:
 	%\framesubtitle{How do we know the state?}
 	\begin{flushleft}
 		
-		Before discussing how we can propose Kalman filter gain, we need two mathematical facts. First, inner and outer product:
+		Before discussing how we can propose Kalman filter gain, we need two mathematical facts. First, a trace of an outer product i sinner product:
 		
 		\begin{equation}
 			\bo{x}\T \bo{x} = \text{tr}(\bo{x}\bo{x}\T)

@@ -4,7 +4,7 @@
 
 
 \title{LMI: Control design and robustness}
-\subtitle{Control Theory, Lecture ??}
+\subtitle{Control Theory, Lecture 14}
 \author{by Sergei Savin}
 \centering
 \date{\mydate}
@@ -20,6 +20,7 @@
 		\begin{itemize}
 			\item LMI
 			\item Control design
+			\item Quadratic Stability
 			\item Robustness
 			\item S-procedure
 			\item Appendix A
@@ -47,6 +48,97 @@
 			\end{example}
 			
 			Notice that the last example is continious-time Lyapunov eq. for LTI system $\dot{\bo{x}} = \bo{A}\bo{x}$, and if such $\bo{S}$ exists the system is stable. 
+			
+		\end{flushleft}
+	\end{frame}
+	
+	
+	
+	
+	\begin{frame}{Continuous Lyapunov eq. as SDP/LMI (1)}
+		%\framesubtitle{Mathematical formulation}
+		\begin{flushleft}
+			
+			In control theory, Lyapunov equation is a condition of whether or not a continuous LTI system $\dot{\mathbf{x}} = \mathbf{A}\mathbf{x}$ is stable:
+			
+			\begin{equation}
+				\begin{cases}
+					\mathbf{A}^\top\mathbf{P} + \mathbf{P}\mathbf{A}  \preceq -\mathbf{Q} \\
+					\mathbf{P} \succeq 0
+				\end{cases}
+			\end{equation}
+			%
+			where $\mathbf{Q} \succeq 0$ is a constant and decision variable is $\mathbf{P}$. This can be represented as an SDP:
+			%
+			\begin{equation}
+				\begin{aligned}
+					& \underset{\mathbf{P}}{\text{minimize}}
+					& & 0, \\
+					& \text{subject to}
+					& & \begin{cases}
+						\mathbf{P} \succeq 0, \\
+						\mathbf{A}^\top\mathbf{P} + \mathbf{P}\mathbf{A} + \mathbf{Q} \preceq 0.
+					\end{cases}
+				\end{aligned}
+			\end{equation}
+			
+			
+		\end{flushleft}
+	\end{frame}
+	
+	
+	
+	
+	\begin{frame}{Continuous Lyapunov eq. as SDP/LMI (2)}
+		%\framesubtitle{Code}
+		\begin{flushleft}
+			
+			\input{code1}
+			
+		\end{flushleft}
+	\end{frame}
+	
+	
+	
+	
+	\begin{frame}{Discrete Lyapunov eq. as SDP/LMI (1)}
+		%\framesubtitle{Mathematical formulation}
+		\begin{flushleft}
+			
+			In control theory, Discrete Lyapunov equation is a condition of whether or not a discrete LTI system $\mathbf{x}_{i+1} = \mathbf{A}\mathbf{x}_i$ is stabilizable:
+			
+			\begin{equation}
+				\begin{cases}
+					\mathbf{A}^\top \mathbf{P}\mathbf{A} - \mathbf{P} + \mathbf{Q} \preceq 0 \\
+					\mathbf{P} \succeq 0
+				\end{cases}
+			\end{equation}
+			%
+			where $\mathbf{Q} \succeq 0$ is a constant and decision variable is $\mathbf{P}$. This can be represented as an SDP:
+			%
+			\begin{equation}
+				\begin{aligned}
+					& \underset{\mathbf{P}}{\text{minimize}}
+					& & 0, \\
+					& \text{subject to}
+					& & \begin{cases}
+						\mathbf{P} \succeq 0, \\
+						\mathbf{A}^\top \mathbf{P}\mathbf{A} - \mathbf{P} + \mathbf{Q} \preceq 0.
+					\end{cases}
+				\end{aligned}
+			\end{equation}
+			
+			
+		\end{flushleft}
+	\end{frame}
+	
+	
+	
+	\begin{frame}{Discrete Lyapunov eq. as SDP/LMI (2)}
+		%\framesubtitle{Code}
+		\begin{flushleft}
+			
+			\input{code2}
 			
 		\end{flushleft}
 	\end{frame}
@@ -107,176 +199,28 @@
 	
 	
 	
-	\begin{frame}{Robustness, 1}
+	\begin{frame}{Robustness}
 		%	\framesubtitle{Part 1}
 		\begin{flushleft}
 			
-			Consider a system $\dot{\bo{x}} = \bo{A}\bo{x}$, but when you don't know $\bo{A}$ exactly. In other words, you don't know the model exactly. This is not to say that we know nothing about the model, but there is an uncertainty in our knowledge.
+			Consider a system:
 			
 			\bigskip
 			
-			A good way to model is luck of model knowledge, this \emph{uncertainty}, is this:
+			Closed-form of the system is $\dot{\bo{x}} = (\bo{A} + \bo{B}\bo{K})\bo{x}$, and full derivative of the Lyapunov function:
 			
 			\begin{equation}
-				\label{eq:uncertain}
-				\dot{\bo{x}} = (\bo{A} + \bo{F} \Delta \bo{E})\bo{x}
+				\dot{\bo{x}} = (\bo{A} + \Tilde{\bo{A}})\bo{x} + (\bo{B} + \Tilde{\bo{B}})\bo{u}
 			\end{equation}
-			%
-			where $\bo{F}$ and $\bo{E}$ are arbitrary matrices, and $\Delta$ is a \emph{norm-bounded} matrix: $||\Delta|| \leq 1$.
+			
+			where $ \Tilde{\bo{A}}$ and $ \Tilde{\bo{B}}$ are unknown (but bound) values. Such a system is said to have a \emph{multiplicative uncertainty}. 
 			
 			\bigskip
 			
-			We can think of it this way: $\bo{A} + \bo{F} \Delta \bo{E}$ is the true but unknown model, and the range of all possible models we can expect is bounded by the possible values of $\Delta$.
+			A controller that can stabilize the system for all admissible values of  $\Tilde{\bo{A}}$ and $ \Tilde{\bo{B}}$ is said to be \emph{robust} to multiplicative uncertainties.
 			
 		\end{flushleft}
 	\end{frame}
-	
-	
-	
-	\begin{frame}{Robustness, 2}
-		%	\framesubtitle{Part 1}
-		\begin{flushleft}
-			
-			Lets write the Lyapunov equation for the system \eqref{eq:uncertain}:
-			
-			\begin{equation}
-				\dot V = \bo{x}^\top 
-				(\bo{A} + \bo{F} \Delta \bo{E})^\top\bo{S}\bo{x} + \bo{x}^\top\bo{S} (\bo{A} + \bo{F} \Delta \bo{E}) \bo{x} \leq 0
-			\end{equation}
-			
-			Let us introduce a new variable $\bo{w} = \Delta \bo{E}\bo{x}$:
-			
-			\begin{equation}
-				\label{eq:Lyapunov_xw}
-				\dot V = \bo{x}^\top 
-				(\bo{A}^\top \bo{S} + \bo{S}\bo{A}) \bo{x} + 
-				\bo{w}^\top \bo{F}^\top\bo{S} \bo{x} +
-				\bo{x}^\top \bo{S}\bo{F} \bo{w} \leq 0
-			\end{equation}
-			
-			Let us consider $\bo{w}^\top \bo{w}$:
-			
-			\begin{equation}
-				\label{eq:Delta-inequality}
-				\bo{w}^\top \bo{w} = 
-				\bo{x}^\top\bo{E}^\top \Delta \Delta \bo{E}\bo{x}
-				\leq
-				\bo{x}^\top\bo{E}^\top \bo{E}\bo{x}
-			\end{equation}		
-			%
-			which is true because $|| \Delta ||\leq 1$. In fact, the only property of the norm that we need here is that the delta inequality \eqref{eq:Delta-inequality} holds.
-			
-		\end{flushleft}
-	\end{frame}
-	
-	
-	
-	\begin{frame}{Robustness, 3}
-		%	\framesubtitle{Part 1}
-		\begin{flushleft}
-			
-			With $\bo{w}^\top \bo{w} 
-			\leq
-			\bo{x}^\top\bo{E}^\top \bo{E}\bo{x}$ we can write:
-			
-			\begin{equation}
-				\bo{x}^\top\bo{E}^\top \bo{E}\bo{x} - \bo{w}^\top \bo{w} \geq 0
-			\end{equation}	
-			
-			Which is the same as:
-			
-			\begin{equation}
-				\label{eq:EEww}
-				\begin{bmatrix}
-					\bo{x} \\ \bo{w}
-				\end{bmatrix}^\top
-				\begin{bmatrix}
-					\bo{E}^\top \bo{E} & 0 \\
-					0 & -\bo{I}
-				\end{bmatrix}		
-				\begin{bmatrix}
-					\bo{x} \\ \bo{w}
-				\end{bmatrix}
-				\geq 0
-			\end{equation}	
-			
-			The same way we can rewrite \eqref{eq:Lyapunov_xw}:
-			
-			\begin{equation}
-				\label{eq:xw_Lyapunov}
-				\begin{bmatrix}
-					\bo{x} \\ \bo{w}
-				\end{bmatrix}^\top
-				\begin{bmatrix}
-					\bo{A}^\top \bo{S} + \bo{S}\bo{A} & \bo{S}\bo{F} \\
-					\bo{F}^\top\bo{S} & 0
-				\end{bmatrix}		
-				\begin{bmatrix}
-					\bo{x} \\ \bo{w}
-				\end{bmatrix}
-				\leq 0
-			\end{equation}	
-			%
-			which only need to hold while \eqref{eq:EEww} holds.
-			
-		\end{flushleft}
-	\end{frame}
-	
-	
-	
-	\begin{frame}{S-procedure}
-		%	\framesubtitle{Part 1}
-		\begin{flushleft}
-			
-			There is a way to enforce constraint $\bo{z}^\top \bo{M}\bo{z} \leq 0$ for such $\bo{z}$ that $\bo{z}^\top \bo{N}\bo{z} \geq 0$. This is called \emph{s-procedure}.
-			
-			\begin{theorem}
-				If $\gamma > 0$ and $\bo{M} + \gamma \bo{N} \prec 0$ then $\bo{z}^\top \bo{N}\bo{z} \geq 0 \implies \bo{z}^\top \bo{M}\bo{z} \leq 0$ 
-			\end{theorem}
-			
-		\end{flushleft}
-	\end{frame}
-	
-	
-	
-	\begin{frame}{Robustness, 4}
-		%	\framesubtitle{Part 1}
-		\begin{flushleft}
-			
-			
-			Using s-procedure we enforce \eqref{eq:xw_Lyapunov} when \eqref{eq:EEww} holds:
-			
-			\begin{equation}
-				%			\label{eq:EEww}
-				\begin{bmatrix}
-					\bo{x} \\ \bo{w}
-				\end{bmatrix}^\top
-				\begin{bmatrix}
-					\bo{A}^\top \bo{S} + \bo{S}\bo{A} + \gamma \bo{E}^\top \bo{E} & \bo{S}\bo{F} \\
-					\bo{F}^\top\bo{S} & -\gamma\bo{I}
-				\end{bmatrix}		
-				\begin{bmatrix}
-					\bo{x} \\ \bo{w}
-				\end{bmatrix}
-				\leq 0
-			\end{equation}
-			
-			In LMI form this is:
-			
-			\begin{equation}
-				\begin{bmatrix}
-					\bo{A}^\top \bo{S} + \bo{S}\bo{A} + \gamma \bo{E}^\top \bo{E} & \bo{S}\bo{F} \\
-					\bo{F}^\top\bo{S} & -\gamma\bo{I}
-				\end{bmatrix}		
-				\prec 0
-			\end{equation}	
-			
-			
-			This is a condition that the system is stable for all values of $\Delta$. The decision variables are $\bo{S}$ and $\gamma$.		
-			
-		\end{flushleft}
-	\end{frame}
-	
 	
 	
 	
@@ -408,6 +352,183 @@
 			
 		\end{flushleft}
 	\end{frame}
+	
+	
+	
+	\begin{frame}{Norm-bounded uncertainty, 1}
+		%	\framesubtitle{Part 1}
+		\begin{flushleft}
+			
+			Consider a system $\dot{\bo{x}} = \bo{A}\bo{x}$, but when you don't know $\bo{A}$ exactly. In other words, you don't know the model exactly. This is not to say that we know nothing about the model, but there is an uncertainty in our knowledge.
+			
+			\bigskip
+			
+			A good way to model is luck of model knowledge, this \emph{uncertainty}, is this:
+			
+			\begin{equation}
+				\label{eq:uncertain}
+				\dot{\bo{x}} = (\bo{A} + \bo{F} \Delta \bo{E})\bo{x}
+			\end{equation}
+			%
+			where $\bo{F}$ and $\bo{E}$ are arbitrary matrices, and $\Delta$ is a \emph{norm-bounded} matrix: $||\Delta|| \leq 1$.
+			
+			\bigskip
+			
+			We can think of it this way: $\bo{A} + \bo{F} \Delta \bo{E}$ is the true but unknown model, and the range of all possible models we can expect is bounded by the possible values of $\Delta$.
+			
+		\end{flushleft}
+	\end{frame}
+	
+	
+	
+	\begin{frame}{Norm-bounded uncertainty, 2}
+		%	\framesubtitle{Part 1}
+		\begin{flushleft}
+			
+			Lets write the Lyapunov equation for the system \eqref{eq:uncertain}:
+			
+			\begin{equation}
+				\dot V = \bo{x}^\top 
+				(\bo{A} + \bo{F} \Delta \bo{E})^\top\bo{S}\bo{x} + \bo{x}^\top\bo{S} (\bo{A} + \bo{F} \Delta \bo{E}) \bo{x} \leq 0
+			\end{equation}
+			
+			Let us introduce a new variable $\bo{w} = \Delta \bo{E}\bo{x}$:
+			
+			\begin{equation}
+				\label{eq:Lyapunov_xw}
+				\dot V = \bo{x}^\top 
+				(\bo{A}^\top \bo{S} + \bo{S}\bo{A}) \bo{x} + 
+				\bo{w}^\top \bo{F}^\top\bo{S} \bo{x} +
+				\bo{x}^\top \bo{S}\bo{F} \bo{w} \leq 0
+			\end{equation}
+			
+			Let us consider $\bo{w}^\top \bo{w}$:
+			
+			\begin{equation}
+				\label{eq:Delta-inequality}
+				\bo{w}^\top \bo{w} = 
+				\bo{x}^\top\bo{E}^\top \Delta \Delta \bo{E}\bo{x}
+				\leq
+				\bo{x}^\top\bo{E}^\top \bo{E}\bo{x}
+			\end{equation}		
+			%
+			which is true because $|| \Delta ||\leq 1$. In fact, the only property of the norm that we need here is that the delta inequality \eqref{eq:Delta-inequality} holds.
+			
+		\end{flushleft}
+	\end{frame}
+	
+	
+	
+	\begin{frame}{Norm-bounded uncertainty, 3}
+		%	\framesubtitle{Part 1}
+		\begin{flushleft}
+			
+			With $\bo{w}^\top \bo{w} 
+			\leq
+			\bo{x}^\top\bo{E}^\top \bo{E}\bo{x}$ we can write:
+			
+			\begin{equation}
+				\bo{x}^\top\bo{E}^\top \bo{E}\bo{x} - \bo{w}^\top \bo{w} \geq 0
+			\end{equation}	
+			
+			Which is the same as:
+			
+			\begin{equation}
+				\label{eq:EEww}
+				\begin{bmatrix}
+					\bo{x} \\ \bo{w}
+				\end{bmatrix}^\top
+				\begin{bmatrix}
+					\bo{E}^\top \bo{E} & 0 \\
+					0 & -\bo{I}
+				\end{bmatrix}		
+				\begin{bmatrix}
+					\bo{x} \\ \bo{w}
+				\end{bmatrix}
+				\geq 0
+			\end{equation}	
+			
+			The same way we can rewrite \eqref{eq:Lyapunov_xw}:
+			
+			\begin{equation}
+				\label{eq:xw_Lyapunov}
+				\begin{bmatrix}
+					\bo{x} \\ \bo{w}
+				\end{bmatrix}^\top
+				\begin{bmatrix}
+					\bo{A}^\top \bo{S} + \bo{S}\bo{A} & \bo{S}\bo{F} \\
+					\bo{F}^\top\bo{S} & 0
+				\end{bmatrix}		
+				\begin{bmatrix}
+					\bo{x} \\ \bo{w}
+				\end{bmatrix}
+				\leq 0
+			\end{equation}	
+			%
+			which only need to hold while \eqref{eq:EEww} holds.
+			
+		\end{flushleft}
+	\end{frame}
+	
+	
+	
+	\begin{frame}{S-procedure}
+		%	\framesubtitle{Part 1}
+		\begin{flushleft}
+			
+			There is a way to enforce constraint $\bo{z}^\top \bo{M}\bo{z} \leq 0$ for such $\bo{z}$ that $\bo{z}^\top \bo{N}\bo{z} \geq 0$. This is called \emph{s-procedure}.
+			
+			\begin{theorem}
+				If $\gamma > 0$ and $\bo{M} + \gamma \bo{N} \prec 0$ then $\bo{z}^\top \bo{N}\bo{z} \geq 0 \implies \bo{z}^\top \bo{M}\bo{z} \leq 0$ 
+			\end{theorem}
+			
+		\end{flushleft}
+	\end{frame}
+	
+	
+	
+	\begin{frame}{Norm-bounded uncertainty, 4}
+		%	\framesubtitle{Part 1}
+		\begin{flushleft}
+			
+			
+			Using s-procedure we enforce \eqref{eq:xw_Lyapunov} when \eqref{eq:EEww} holds:
+			
+			\begin{equation}
+				%			\label{eq:EEww}
+				\begin{bmatrix}
+					\bo{x} \\ \bo{w}
+				\end{bmatrix}^\top
+				\begin{bmatrix}
+					\bo{A}^\top \bo{S} + \bo{S}\bo{A} + \gamma \bo{E}^\top \bo{E} & \bo{S}\bo{F} \\
+					\bo{F}^\top\bo{S} & -\gamma\bo{I}
+				\end{bmatrix}		
+				\begin{bmatrix}
+					\bo{x} \\ \bo{w}
+				\end{bmatrix}
+				\leq 0
+			\end{equation}
+			
+			In LMI form this is:
+			
+			\begin{equation}
+				\begin{bmatrix}
+					\bo{A}^\top \bo{S} + \bo{S}\bo{A} + \gamma \bo{E}^\top \bo{E} & \bo{S}\bo{F} \\
+					\bo{F}^\top\bo{S} & -\gamma\bo{I}
+				\end{bmatrix}		
+				\prec 0
+			\end{equation}	
+			
+			
+			This is a condition that the system is stable for all values of $\Delta$. The decision variables are $\bo{S}$ and $\gamma$.		
+			
+		\end{flushleft}
+	\end{frame}
+	
+	
+	
+	
+	
 	
 	
 	
